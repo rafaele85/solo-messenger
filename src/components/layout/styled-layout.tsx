@@ -29,13 +29,15 @@ const useStyles = makeStyles( (theme: Theme) => {
             paddingBottom: "4px",
             [theme.breakpoints.up("sm")] : {  //@media (min-width:600px)
                 display: "none"
-            }
+            },
+            zIndex: 100,
         },
         container: {
             height: "100vh",
             width: "100%",
             display: "flex",
             flexDirection: "column",
+            zIndex: 100,
         },
         header: {
             flex: 0,
@@ -76,6 +78,7 @@ export interface IStyledLayoutProps {
 }
 
 export const StyledLayout = (props: IStyledLayoutProps) => {
+
     const classes = useStyles();
 
     const auth = useSelector(selectAuth);

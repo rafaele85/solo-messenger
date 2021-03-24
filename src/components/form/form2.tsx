@@ -1,9 +1,9 @@
 import {Button, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import {TitleCard} from "../title-card";
 import {InputField} from "./field";
-import {FormEvent} from "react";
 import {useHistory} from "react-router";
 import {ValidationError} from "./validation-error";
+import {ChangeEvent, FormEvent} from "react";
 
 
 const useStyles = makeStyles((theme: Theme) => {
@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) => {
         paper: {
             display: "flex",
             flexDirection: "column",
-            maxWidth: "300px",
             margin: "20px auto",
             padding: `${theme.spacing(2)}px`,
         },
@@ -33,15 +32,13 @@ const useStyles = makeStyles((theme: Theme) => {
 export interface IFormField {
     name: string;
     label: string;
-    isValid?: (val: string) => string;
-    minLen?: number;
-    minLenError?: string;
     value?: string;
     type?: "text"|"password"|"email"|"tel";
+    onChange: (v: string) => void;
+    error?: string;
+    changed?: boolean;
 }
 
-export type IFormValues = { [name: string]: string };
-export type IFormChanged = { [name: string]: boolean };
 export type IFormFieldValidateFunc = (value: string) => string;
 
 export interface IFormProps {
@@ -51,50 +48,11 @@ export interface IFormProps {
     cancelUrl?: string;
     submitLabel?: string;
     onSubmit: () => void;
-    errors?: IFormValues;
-    onChange: (fieldName: string, value: string, validationError?: string) => void;
+    submitDisabled?: boolean;
+    error?: string;
 }
 
 export const Form = (props: IFormProps) => {
-
-    const validateField = (f: IFormField, v: string) => {
-        if(f.isValid) {
-            return f.isValid(v);
-        }
-        if(f.minLen && v.length<f.minLen) {
-            return f.minLenError||`${f.label} should contain at least ${f.minLen} characters`;
-        }
-        return "";
-    };
-
-    const handleSubmit = (e: FormEvent) => {
-        e.preventDefault();
-
-        let hasErrors = false;
-        for(let f of props.fields) {
-            const err = validateField(f, f.value||"");
-            props.onChange(f.name, f.value||"", err);
-            if(err) {
-                hasErrors = true;
-            }
-        }
-        if(!hasErrors) {
-            props.onSubmit();
-        }
-    };
-
-    const updateField = (f: IFormField, val: string) => {
-        const err = validateField(f, val);
-        props.onChange(f.name, val, err);
-    };
-
-    const history = useHistory();
-    const handleCancel = () => {
-        if(props.cancelUrl) {
-            history.push(props.cancelUrl);
-        }
-    };
-
     const classes = useStyles();
 
     let jsxTitle;
@@ -108,31 +66,31 @@ export const Form = (props: IFormProps) => {
         )
     }
 
-    let jsxFields: JSX.Element[] = [];
-    for(let i=0; i<props.fields.length; i++) {
-        const f = props.fields[i];
-        const type = f.type || "text";
-        jsxFields.push((
-            <InputField
-                name={f.name}
-                label={f.label}
-                type={type}
-                onChange={(v: string) => updateField(f, v)}
-                value={f.value}
-                error={(props.errors||{})[f.name]||""}
-                autoFocus={i===0}
-            />
-        ))
-    }
-
     let jsxError;
-    let err = props.errors?.error;
+    let err = props.error;
     if(err) {
         jsxError = (
             <ValidationError message={err} />
         );
     }
 
+    const history = useHistory();
+    const handleCancel = () => {
+        if(props.cancelUrl) {
+            history.push(props.cancelUrl);
+        }
+    };
+
+    const handleChange = (v: string, field: IFormField) => {
+        field.onChange(v);
+    };
+
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        props.onSubmit();
+    }
+
+    const submitDisabled = props.submitDisabled;
 
     let jsxCancel;
     if(props.cancelUrl) {
@@ -147,8 +105,6 @@ export const Form = (props: IFormProps) => {
             </Button>
         )
     }
-
-    const submitDisabled = !!err || props.fields.some((f: IFormField) => (!!(props.errors||{})[f.name] ) );
 
     const jsxSubmit = (
         <Button
@@ -170,6 +126,22 @@ export const Form = (props: IFormProps) => {
                 {jsxCancel}
             </div>
         )
+    }
+
+    const jsxFields: JSX.Element[] = [];
+    for(let i=0; i<props.fields.length; i++) {
+        const f = props.fields[i];
+        jsxFields.push((
+            <InputField
+                label={f.label}
+                name={f.name}
+                onChange={(v: string) => handleChange(v, f)}
+                value={f.value}
+                error={f.error}
+                changed={f.changed}
+                type={f.type}
+            />
+        ));
     }
 
     return (

@@ -1,219 +1,153 @@
 import {StyledLayout} from "../layout/styled-layout";
-import {Button, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
-import {TitleCard} from "../title-card";
-import {defaultFormValue, IFieldValue, InputField} from "../form/field";
-import {FormEvent, useState} from "react";
-import {ValidationError} from "../form/validation-error";
+import {useState} from "react";
 import {AuthService} from "../../service/auth";
 import {useSelector} from "react-redux";
 import {selectProfile} from "../../state/root";
 import {useHistory} from "react-router";
-
-
-const useStyles = makeStyles((theme: Theme) => {
-    return {
-        paper: {
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: "300px",
-            margin: "20px auto",
-            padding: `${theme.spacing(2)}px`,
-        },
-        description: {
-            width: "400px",
-        },
-        submit: {
-            marginTop: `${theme.spacing(4)}px`,
-        },
-        buttonContainer: {
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-        }
-    }
-});
+import {Form, IFormField} from "../form/form2";
 
 export const Profile = () => {
-    const title = "Профайл";
-
-    const classes = useStyles();
+    const ttlName = "Имя";
+    const ttlPassword = "Пароль";
+    const ttlConfirmPassword = "Подтверждение пароля";
+    const ttlSave = "Сохранить";
+    const ttlCancel = "Отмена";
+    const ttlNameLenError = "В имени должно быть как минимум 3 буквы";
+    const ttlPasswordLenError = "Пароль должен быть из минимум букв и цифр";
+    const ttlPasswordMismatchError = "Подтверждение пароля не совпадает с паролем";
+    const ttlTitle = "Мой профиль";
 
     const profile = useSelector(selectProfile);
 
     const history = useHistory();
 
-    const handleCancel = () => {
-        history.push("/");
-    };
+    const [name, setName] = useState<string>(profile?.name||"");
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
-        let nErr = validateName(nameValue.value);
-        let pErr = validatePassword(passwordValue.value);
-        let cErr = validateConfirmPassword(confirmPasswordValue.value);
+    const [nameError, setNameError] = useState<string>("");
+    const [passwordError, setPasswordError] = useState<string>("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState<string>("");
 
+    const [nameChanged, setNameChanged] = useState<boolean>(false);
+    const [passwordChanged, setPasswordChanged] = useState<boolean>(false);
+    const [confirmPasswordChanged, setConfirmPasswordChanged] = useState<boolean>(false);
 
-        if(!nErr && !pErr && !cErr) {
-            try {
-                await AuthService.instance().updateProfile(nameValue.value, passwordValue.value, confirmPasswordValue.value);
-                history.push("/");
-                return;
-            } catch(err) {
-                if(err.name) {
-                    nErr=err.name;
-                }
-                if(err.password) {
-                    pErr = err.password;
-                }
-                if(err.confirmPassword) {
-                    cErr = err.confirmPassword;
-                }
-                if(err.error) {
-                    setError(err.error);
-                }
-            }
-        }
-        if(nErr) {
-            setNameValue({...nameValue, error: nErr, changed: true});
-        }
-        if(pErr) {
-            setPasswordValue({...passwordValue, error: pErr, changed: true});
-        }
-        if(cErr) {
-            setConfirmPasswordValue({...confirmPasswordValue, error: cErr, changed: true});
-        }
-    };
-
-    const [nameValue, setNameValue] = useState<IFieldValue>({...defaultFormValue, value: profile?.name||""});
-    const [passwordValue, setPasswordValue] = useState<IFieldValue>({...defaultFormValue});
-    const [confirmPasswordValue, setConfirmPasswordValue] = useState<IFieldValue>({...defaultFormValue});
     const [error, setError] = useState<string>("");
 
     const validateName = (v: string) => {
-        let err="";
         if(v.length<3) {
-            err="В имени должно быть как минимум 3 буквы";
+            return ttlNameLenError;
         }
-        return err;
-    }
-    const updateName = (v: string) => {
-        const newValue: IFieldValue = {...nameValue};
-        newValue.value=v;
-        newValue.changed=true;
-        const err = validateName(v);
-        newValue.error = err;
-        setNameValue(newValue);
-        setError("");
+        return "";
     };
-
     const validatePassword = (v: string) => {
-        let err="";
         if(v.length<8) {
-            err="Пароль должен быть из минимум букв и цифр";
+            return ttlPasswordLenError;
         }
-        return err;
+        return "";
     };
-
-    const updatePassword = (v: string) => {
-        const newValue: IFieldValue = {...passwordValue};
-        newValue.value=v;
-        newValue.changed=true;
-        newValue.error=validatePassword(v);
-        setPasswordValue(newValue);
-        setError("");
-    };
-
-
     const validateConfirmPassword = (v: string) => {
-        let err="";
-        if(v!==passwordValue.value) {
-            err="Подтверждение пароля не совпадает с паролем";
+        if(v!==password) {
+            return ttlPasswordMismatchError;
         }
-        return err;
+        return "";
     };
 
-    const updateConfirmPassword = (v: string) => {
-        const newValue: IFieldValue = {...confirmPasswordValue};
-        newValue.value=v;
-        newValue.changed=true;
-        newValue.error=validateConfirmPassword(v);
-        setConfirmPasswordValue(newValue);
+    const handleChangeName = (value: string) => {
+        const err = validateName(value);
+        setName(value);
+        setNameError(err);
+        setNameChanged(true);
         setError("");
     };
 
-    let jsxError;
-    if(error) {
-        jsxError = (
-            <ValidationError message={error} />
-        )
-    }
+    const handleChangePassword = (value: string) => {
+        const err = validatePassword(value);
+        setPassword(value);
+        setPasswordError(err);
+        setPasswordChanged(true);
+        setError("");
+    };
 
-    console.log(`error=${error}`)
+    const handleChangeConfirmPassword = (value: string) => {
+        const err = validateConfirmPassword(value);
+        setConfirmPassword(value);
+        setConfirmPasswordError(err);
+        setConfirmPasswordChanged(true);
+        setError("");
+    };
 
-    const submitDisabled = !!nameValue.error || !!passwordValue.error || !!confirmPasswordValue.error || !!error;
-    const titleName = "Имя";
-    const titlePassword = "Пароль";
-    const titleConfirmPassword = "Подтверждение пароля";
-    const titleSave = "Сохранить";
-    const ttlCancel = "Отмена";
+    const handleSubmit = async () => {
+        let nErr = validateName(name);
+        let pErr = validatePassword(password);
+        let cErr = validateConfirmPassword(confirmPassword);
+        if(!nErr && !pErr && !cErr) {
+            try {
+                await AuthService.instance().updateProfile(name, password, confirmPassword);
+                history.push("/");
+                return;
+            } catch(err) {
+                setError(err.error);
+                nErr=err.name;
+                pErr=err.password;
+                cErr=err.confirmPassword;
+            }
+        }
+        setNameError(nErr);
+        setNameChanged(true);
+        setPasswordError(pErr);
+        setPasswordChanged(true);
+        setConfirmPasswordError(cErr);
+        setConfirmPasswordChanged(true);
+    };
+
+    const submitDisabled = !!error || !!nameError || !!passwordError || !!confirmPasswordError;
+
+    console.log(`profile: ${error} ${nameError} ${passwordError} ${confirmPasswordError} ${submitDisabled}`)
+
+    const fields: IFormField[] = [
+        {
+            name: "name",
+            label: ttlName,
+            value: name,
+            onChange: handleChangeName,
+            error: nameError,
+            type: "text",
+            changed: nameChanged
+        },
+        {
+            name: "password",
+            label: ttlPassword,
+            value: password,
+            onChange: handleChangePassword,
+            error: passwordError,
+            type: "password",
+            changed: passwordChanged
+        },
+        {
+            name: "confirmPassword",
+            label: ttlConfirmPassword,
+            value: confirmPassword,
+            onChange: handleChangeConfirmPassword,
+            error: confirmPasswordError,
+            type: "password",
+            changed: confirmPasswordChanged
+        }
+    ];
 
     return (
-        <StyledLayout title={title}>
-            <form autoComplete={"off"} noValidate onSubmit={handleSubmit}>
-                <Paper className={classes.paper}>
-                    <TitleCard>
-                        <Typography variant={"h6"} className={classes.description}>
-                            Мой профайл
-                        </Typography>
-                    </TitleCard>
-                    <InputField
-                        name={"name"}
-                        label={titleName}
-                        onChange={updateName}
-                        value={nameValue}
-                        autoFocus={true}
-                    />
-
-                    <InputField
-                        label={titlePassword}
-                        name={"password"}
-                        type={"password"}
-                        value={passwordValue}
-                        onChange = {updatePassword}
-                    />
-
-                    <InputField
-                        label={titleConfirmPassword}
-                        name={"confirmPassword"}
-                        type={"password"}
-                        value={confirmPasswordValue}
-                        onChange = {updateConfirmPassword}
-                    />
-                    {jsxError}
-
-                    <div className={classes.buttonContainer}>
-                        <Button
-                            type={"submit"}
-                            color={"primary"}
-                            variant="contained"
-                            className={classes.submit}
-                            disabled={submitDisabled}
-                        >
-                            {titleSave}
-                        </Button>
-
-                        <Button
-                            type={"button"}
-                            variant="contained"
-                            className={classes.submit}
-                            onClick={handleCancel}
-                        >
-                            {ttlCancel}
-                        </Button>
-                    </div>
-                </Paper>
-            </form>
+        <StyledLayout title={ttlTitle}>
+            <Form
+                title={ttlTitle}
+                fields={fields}
+                cancelLabel={ttlCancel}
+                cancelUrl={"/"}
+                submitLabel={ttlSave}
+                onSubmit={handleSubmit}
+                submitDisabled={submitDisabled}
+                error={error}
+            />
         </StyledLayout>
     )
 }

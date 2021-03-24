@@ -10,6 +10,7 @@ export interface IContactsProviderProps {
     children: any;
 }
 export const ContactsProvider = (props: IContactsProviderProps) => {
+
     const dispatch = useDispatch();
     const handleContactsChange = (contacts: IContact[]) => {
         dispatch(setContacts(contacts));

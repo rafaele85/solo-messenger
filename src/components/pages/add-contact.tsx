@@ -1,110 +1,67 @@
 import {StyledLayout} from "../layout/styled-layout";
-import {Button, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
-import {useSelector} from "react-redux";
-import {selectProfile} from "../../state/root";
-import {useHistory} from "react-router";
-import {FormEvent, useState} from "react";
-import {TitleCard} from "../title-card";
-import {IFieldValue, InputField} from "../form/field";
-
-
-const useStyles = makeStyles((theme: Theme) => {
-    return {
-        paper: {
-            display: "flex",
-            flexDirection: "column",
-            maxWidth: "300px",
-            margin: "20px auto",
-            padding: `${theme.spacing(2)}px`,
-        },
-        description: {
-            width: "400px",
-        },
-        submit: {
-            marginTop: `${theme.spacing(4)}px`,
-        },
-        buttonContainer: {
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-        }
-    }
-});
-
+import {Form, IFormField} from "../form/form2";
+import {useState} from "react";
 
 export const AddContact = () => {
-    const classes = useStyles();
-    const title = "Добавить контакт";
+    const ttlTitle = "Добавить контакт";
+    const ttlFormTitle = "Добавление контакта";
+    const ttlSearch="Поиск по имени";
+    const ttlAdd = "Добавить";
+    const ttlCancel = "Назад";
 
+    const [query, setQuery] = useState<string>("");
+    const [queryError, setQueryError] = useState<string>("");
+    const [queryChanged, setQueryChanged] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
 
-    const profile = useSelector(selectProfile);
-
-    const history = useHistory();
-
-    const [queryValue, setQueryValue] = useState<IFieldValue>({value: "", changed: false, error: ""});
-
-    const updateQueryText = (v: string) => {
-        const newValue: IFieldValue = {...queryValue};
-        newValue.value=v;
-        newValue.changed=true;
-        setQueryValue(newValue);
+    const validateQuery = (v: string) => {
+        return "";
     };
 
-    const handleCancel = () => {
-        history.push("/");
+    const handleChangeQuery = (value: string) => {
+        const err = validateQuery(value);
+        setQuery(value);
+        setQueryError(err);
+        setQueryChanged(true);
+        setError("");
     };
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    const handleSubmit = async () => {
+        let qErr = validateQuery(query);
+        if(!qErr) {
+            try {
+                //
+                return;
+            } catch(err) {
+                setError(err.error);
+                qErr=err.query;
+            }
+        }
+        setQueryError(qErr);
     };
 
-    const titleSearch="Поиск по имени";
-    const titleAdd = "Добавить";
-    const titleCancel = "Назад";
+    const submitDisabled = !!error || !!queryError;
 
-    let addDisabled = true;
+
+    const queryField: IFormField = {
+        name: "query",
+        label: ttlSearch,
+        value: query,
+        onChange: handleChangeQuery,
+        error: queryError,
+        changed: queryChanged,
+    };
 
     return (
-        <StyledLayout title={title}>
-            <form autoComplete={"off"} noValidate onSubmit={handleSubmit}>
-                <Paper className={classes.paper}>
-                    <TitleCard>
-                        <Typography variant={"h6"} className={classes.description}>
-                            Добавление контакта
-                        </Typography>
-                    </TitleCard>
-                    <InputField
-                        name={"queryText"}
-                        label={titleSearch}
-                        onChange={updateQueryText}
-                        value={queryValue}
-                        autoFocus={true}
-                    />
-
-
-                    <div className={classes.buttonContainer}>
-                        <Button
-                            type={"submit"}
-                            color={"primary"}
-                            variant="contained"
-                            className={classes.submit}
-                            disabled = {addDisabled}
-                        >
-                            {titleAdd}
-                        </Button>
-
-                        <Button
-                            type={"button"}
-                            variant="contained"
-                            className={classes.submit}
-                            onClick={handleCancel}
-                        >
-                            {titleCancel}
-                        </Button>
-                    </div>
-                </Paper>
-            </form>
+        <StyledLayout title={ttlTitle}>
+            <Form title={ttlFormTitle}
+                  fields={[queryField]}
+                  cancelLabel={ttlCancel}
+                  cancelUrl={"/"}
+                  submitLabel={ttlAdd}
+                  onSubmit={handleSubmit}
+                  submitDisabled={submitDisabled}
+            />
         </StyledLayout>
     );
 }

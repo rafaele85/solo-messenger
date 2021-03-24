@@ -1,4 +1,4 @@
-import {Divider, List, ListItem, makeStyles, Paper, Theme} from "@material-ui/core";
+import {Divider, List, ListItem, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import React from "react";
 import {AuthService} from "../../service/auth";
 import {StyledListItem} from "../styled-list-item";
@@ -21,7 +21,9 @@ const useStyles = makeStyles( (theme: Theme) => {
         addIcon: {
             paddingRight: "4px",
         },
-
+        mycontacthdr: {
+            paddingLeft: `${theme.spacing(1)}px`
+        }
     }
 })
 
@@ -73,6 +75,9 @@ export const Menu = (props: IMenuProps) => {
 
     return (
         <Paper className={classes.container}>
+            <Typography className={classes.mycontacthdr}>Мои Контакты</Typography>
+            <Divider />
+            {jsxContacts}
             <Divider />
             <List>
                 <StyledListItem to="/add-contact"
@@ -82,7 +87,6 @@ export const Menu = (props: IMenuProps) => {
                     <AddIcon className={classes.addIcon} />
                     Добавить контакт
                 </StyledListItem>
-                {jsxContacts}
             </List>
             <Divider />
             <List>

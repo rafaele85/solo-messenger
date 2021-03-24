@@ -2,20 +2,6 @@ import {makeStyles, TextField, Theme} from "@material-ui/core";
 import {ChangeEvent} from "react";
 import {ValidationError} from "./validation-error";
 
-
-export type IFieldValue = {
-    value: string;
-    error?: string;
-    changed: boolean;
-};
-
-export const defaultFormValue: IFieldValue = {
-    value: "",
-    error: "",
-    changed: false
-};
-
-
 const useStyles = makeStyles( (theme: Theme) => {
     return {
         container: {
@@ -30,7 +16,9 @@ export interface IInputFieldProps {
     label: string;
     name: string;
     type?: "text"|"password"|"email"|"tel";
-    value: IFieldValue;
+    changed?: boolean;
+    value?: string;
+    error?: string;
     onChange: (v: string) => void;
     autoFocus?: boolean;
 }
@@ -44,8 +32,8 @@ export const InputField = (props: IInputFieldProps) => {
     };
 
     let jsxError;
-    if(props.value.changed && props.value.error) {
-        jsxError = ( <ValidationError message={props.value.error} /> );
+    if(props.changed && props.error) {
+        jsxError = ( <ValidationError message={props.error} /> );
     }
 
     return (
@@ -54,9 +42,9 @@ export const InputField = (props: IInputFieldProps) => {
                 name={props.name}
                 label={props.label}
                 type={props.type||"text"}
-                value={props.value.value}
+                value={props.value}
                 onChange = {handleChange}
-                error={!!props.value.error && props.value.changed}
+                error={!!props.error && props.changed}
                 autoFocus={props.autoFocus}
             />
             {jsxError}

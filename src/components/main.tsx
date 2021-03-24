@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme: Theme) => {
 })
 
 export const Main = () => {
+
     const auth = useSelector(selectAuth);
 
     const classes = useStyles();

@@ -31,10 +31,12 @@ export class AuthService extends CommonService {
         try {
             if(process.env.NODE_ENV==="development" && username==="john" && password==="12345678" ) {
                 authData = {name: "John Smith", sessionId: "12134343434"};
+                console.log("signin1")
+            } else if(process.env.NODE_ENV==="development" && username==="john1") {
+                throw {username: "Invalid username"};
             } else {
                 authData = await this.apiGet<ISignInData, IAuth>(url, signInData);
             }
-
             NotificationService.instance().notify(IEvent.AUTH, undefined, authData);
             if(authData) {
                 const profile: IProfile = { name: authData?.name};
