@@ -39,4 +39,6 @@ export enum ILocalizationResource {
     PROFILE_MENU="profile_menu",
     EXIT_MENU="exit_menu",
     MYCONTACTS_MENU="mycontacts_menu",
+    CONTACTLIST="contactlist",
+    ERROR_CONTACTNOTSELECTED="error_contactnotselected",
 }

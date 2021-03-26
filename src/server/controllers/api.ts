@@ -2,8 +2,9 @@ import express, {Request, Response, NextFunction} from "express";
 import { APIResources } from "../../shared/types/api";
 import { ISession } from "../../shared/types/session";
 import { ILanguage } from "../../shared/types/language";
+import { ID_TYPE } from "../../shared/types/id-type";
     
-type IRequestHandler = (payload: any, language: ILanguage, session: ISession) => Promise<any>;
+type IRequestHandler = (payload: any, language: ILanguage, session: ISession, messageId?: ID_TYPE) => Promise<any>;
 
 export class APIController {
     private static handlers = new Map<APIResources, IRequestHandler>();
@@ -13,10 +14,10 @@ export class APIController {
     }
 
     public static async handleRequest(handler: IRequestHandler, req: Request, res: Response, next: NextFunction) {        
-        const {session, language, ...rest} = req.body?.data;        
+        const {session, language, messageId, ...rest} = req.body?.data;        
         console.log(`handleRequest rest=`, rest)
         try {
-            const response = await handler(rest, language, session);
+            const response = await handler(rest, language, session, messageId);
             res.json(response);
         } catch(err) {
             console.error(`${APIResources.LOGIN} error `, err);

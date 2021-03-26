@@ -29,7 +29,7 @@ else
    insert into session(userid, sessionkey)
    select _id, _sessionkey;
    
-   select row_to_json(q) as auth from (select id, name, _sessionkey sessionKey from "user" where "user".id = _id) q into _js;
+   select row_to_json(q) as auth from (select id::varchar, name, _sessionkey sessionKey from "user" where "user".id = _id) q into _js;
    select jsetjson('{}', 'auth', _js) into _js;
    call LOGJSONADD('signin', _js);
 end if;

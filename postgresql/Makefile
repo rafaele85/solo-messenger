@@ -18,6 +18,10 @@ buildpostgres:
 	$(runpostgres) create-function-successwithjson.sql
 	$(runpostgres) create-function-errsjson.sql
 	$(runpostgres) create-function-userlogin.sql
+	$(runpostgres) create-function-userlogout.sql
+	$(runpostgres) create-function-usersignup.sql
+	$(runpostgres) create-function-my-contacts-list.sql
+	$(runpostgres) create-function-matching-contact-list.sql
 
 all: buildpostgres
 

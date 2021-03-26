@@ -149,6 +149,9 @@ addl(`${ILocalizationCategory.MAINMENU}.${ILocalizationResource.EXIT_MENU}`,
 addl(`${ILocalizationCategory.MAINMENU}.${ILocalizationResource.MYCONTACTS_MENU}`,
     "My Contacts", "Мои Контакты"
 );
-
-
-
+addl(`${ILocalizationCategory.ADDCONTACT}.${ILocalizationResource.CONTACTLIST}`,
+    "Search results", "Результаты поиска"
+);
+addl(`${ILocalizationCategory.ADDCONTACT}.${ILocalizationResource.ERROR_CONTACTNOTSELECTED}`,
+    "Contact is not selected", "Не выбран контакт"
+);

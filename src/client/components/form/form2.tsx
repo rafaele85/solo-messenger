@@ -1,10 +1,10 @@
 import {Button, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import {TitleCard} from "../title-card";
-import {InputField} from "./field";
+import {InputField} from "./input-field";
 import {useHistory} from "react-router";
 import {ValidationError} from "./validation-error";
 import {FormEvent} from "react";
-
+import {ListField} from "./list-field";
 
 const useStyles = makeStyles((theme: Theme) => {
     return {
@@ -33,10 +33,15 @@ export interface IFormField {
     name: string;
     label: string;
     value?: string;
-    type?: "text"|"password"|"email"|"tel";
+    type?: "text"|"password"|"email"|"tel"|"list";
     onChange: (v: string) => void;
     error?: string;
-    changed?: boolean;
+    changed?: boolean;    
+    autoFocus?: boolean;
+
+    listValues?: any[];
+    listLabelExtractor?: (obj: any) => string;
+    listValueExtractor?: (obj: any) => string;
 }
 
 export type IFormFieldValidateFunc = (value: string) => string;
@@ -128,21 +133,42 @@ export const Form = (props: IFormProps) => {
         )
     }
 
-    const jsxFields: JSX.Element[] = [];
+    const jsxFields: JSX.Element[] = [];    
     for(let i=0; i<props.fields.length; i++) {
         const f = props.fields[i];
-        jsxFields.push((
-            <InputField
-                key={f.name}
-                label={f.label}
-                name={f.name}
-                onChange={(v: string) => handleChange(v, f)}
-                value={f.value}
-                error={f.error}
-                changed={f.changed}
-                type={f.type}
-            />
-        ));
+        if(f.type==="list") {
+            jsxFields.push((
+                <ListField
+                    key={f.name}
+                    label={f.label}
+                    name={f.name}
+                    onChange={(v: string) => handleChange(v, f)}
+                    value={f.value}
+                    error={f.error}
+                    changed={f.changed}
+                    type={f.type}
+                    autoFocus={f.autoFocus}
+                    listValues={f.listValues}
+                    listLabelExtractor={f.listLabelExtractor}
+                    listValueExtractor={f.listValueExtractor}
+                />
+            ));
+        } else {
+            jsxFields.push((
+                <InputField
+                    key={f.name}
+                    label={f.label}
+                    name={f.name}
+                    onChange={(v: string) => handleChange(v, f)}
+                    value={f.value}
+                    error={f.error}
+                    changed={f.changed}
+                    type={f.type}
+                    autoFocus={f.autoFocus}
+                />
+            ));
+        }
+        
     }
 
     return (

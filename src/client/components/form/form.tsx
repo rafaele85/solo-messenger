@@ -1,6 +1,6 @@
 import {Button, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import {TitleCard} from "../title-card";
-import {InputField} from "./field";
+import {InputField} from "./input-field";
 import {FormEvent} from "react";
 import {useHistory} from "react-router";
 import {ValidationError} from "./validation-error";

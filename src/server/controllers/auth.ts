@@ -2,7 +2,7 @@ import { PostgreSQLConnection } from './../db/db';
 import { UnknownError } from "../../shared/types/error";
 import { parseQueryResult, parseQueryResultString } from './../util/query-parse';
 import { ID_TYPE } from "../../shared/types/id-type";
-import { IAuth } from "../../shared/types/auth";
+import { IAuth, ISignInData, ISignUpData } from "../../shared/types/auth";
 import { APIResources } from "../../shared/types/api";
 import { APIController } from './api';
 import { ILanguage } from "../../shared/types/language";
@@ -10,7 +10,7 @@ import { ISession } from "../../shared/types/session";
 
 enum PSQLQuery {
     LOGIN = "select * from UserLoginJSON($1, $2, $3) res",
-    LOGOUT = "select * from UserLogout($1) res",
+    LOGOUT = "select * from UserLogoutJSON($1) res",
     SIGNUP = "select * from UserSignupJSON($1, $2, $3, $4, $5) res",
 }
 
@@ -27,8 +27,7 @@ export class AuthController {
         APIController.registerHandler(APIResources.SIGNUP, AuthController.instance().signup);
     }
   
-    public async login(payload: any, language: ILanguage, session: ISession) {
-        const messageId = payload?.messageId;
+    public async login(payload: ISignInData, language: ILanguage, session: ISession, messageId?: ID_TYPE) {
         const username = payload?.username;
         const hashPassword = payload?.hashPassword;
 
@@ -53,8 +52,7 @@ export class AuthController {
         return auth;
     }
 
-    public async signup(payload: any, language: ILanguage, session: ISession) {
-        const messageId = payload?.messageId;
+    public async signup(payload: ISignUpData, language: ILanguage, session: ISession, messageId?: ID_TYPE) {
         const name = payload?.name;
         const username = payload?.username;
         const hashPassword = payload?.hashPassword;
@@ -82,9 +80,7 @@ export class AuthController {
         return auth;
     }
 
-    public async logout(payload: any, language: ILanguage, session: ISession) {
-        const messageId = payload?.messageId;
-
+    public async logout(payload: any, language: ILanguage, session: ISession, messageId?: ID_TYPE) {
         console.log(`messageId=${messageId}, session=${session} `)
 
         let res;

@@ -4,10 +4,12 @@ import morgan from "morgan";
 import cors from "cors";
 import { APIController } from "./controllers/api";
 import { AuthController } from "./controllers/auth";
+import { ContactController } from "./controllers/contact";
 
 
 const initializeControllers = () => {
     AuthController.initialize();    
+    ContactController.initialize();    
 }
 
 const startApp = () => {

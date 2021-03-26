@@ -3,27 +3,10 @@ import {NotificationService} from "./notification";
 import {IEvent} from "../types/event";
 import {CommonService} from "./common";
 import {sha256} from "js-sha256";
-import {IAuth} from "../../shared/types/auth";
+import {IAuth, IProfileData, ISignInData, ISignUpData} from "../../shared/types/auth";
 import {IProfile} from "../types/profile";
 import { APIResources } from "../../shared/types/api";
 import { ILocalizationResource } from "../../shared/types/localization";
-
-interface ISignInData {
-    username: string;
-    hashPassword: string;
-}
-
-interface ISignUpData extends ISignInData {
-    name: string;
-    hashConfirmPassword: string;
-}
-
-
-type IProfileData = {
-    name: string;
-    hashPassword: string;
-    hashConfirmPassword: string;
-}
 
 export class AuthService extends CommonService {
     private static readonly _instance = new AuthService();
@@ -90,7 +73,7 @@ export class AuthService extends CommonService {
             const session = this.getSessionKey();
             console.log("signout2 session=", session)
             console.log(`${url} {} ${session}`)
-            await this.apiPost<any, undefined>(url, {}, session);
+            await this.apiPost<{}, undefined>(url, {}, session);
             NotificationService.instance().notify(IEvent.AUTH, undefined, undefined);
             NotificationService.instance().notify(IEvent.PROFILE, undefined, undefined);
             return;

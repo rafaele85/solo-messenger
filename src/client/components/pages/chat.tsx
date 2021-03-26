@@ -16,6 +16,8 @@ export const Chat = () => {
     const id = params.id;
     const contacts = useSelector(selectContacts) || [];
     const currentContact = contacts.find( (c: IContact) => c.id===id);
+    console.log(`Chat: id=${id} currentContact=${currentContact} contacts=`)
+    console.dir(contacts);
 
 
     const title = `${ttlChatWith} ${currentContact?.name}`;

@@ -20,7 +20,7 @@ export const ContactsProvider = (props: IContactsProviderProps) => {
         let mounted=true;
         const fetchData = async () => {
             try {
-                await ContactService.instance().сontactsGet();
+                await ContactService.instance().myList();
             } catch(err) {
                 console.error(err);
             }

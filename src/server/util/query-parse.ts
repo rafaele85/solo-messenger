@@ -48,6 +48,9 @@ export const isValidNonEmptyJSONObjectArray = (str: string) => {
 
 
 export function tryParseJSONArray<TArrayItem>(str: string) {
+    if(typeof str === "object") {
+        return str as TArrayItem;
+    }
     if(!isValidNonEmptyJSONObjectArray(str)) {
         return [] as TArrayItem[];
     }
@@ -108,4 +111,19 @@ export function parseQueryResultVoid(result: IQueryResultJSON) {
     if(errors && Object.getOwnPropertyNames(errors)) {
         throw errors;
     }
+}
+
+export function parseQueryResultArray<T>(result: IQueryResultJSON) {
+    const errors = tryParseJSON<IErrors>( result.strErrorsJSON || "");
+    const payload = tryParseJSONArray<T>( result.strPayloadJSON || "") || [];
+    if(result && !(errors && Object.getOwnPropertyNames(errors)) ) {
+        return payload;
+    }
+    if(!result) {
+        console.error("res is blank")
+    } else if(errors && Object.getOwnPropertyNames(errors)) {
+        console.error("errors = ", errors);
+        throw errors;
+    }
+    throw UnknownError();
 }

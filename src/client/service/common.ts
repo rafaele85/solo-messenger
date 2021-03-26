@@ -2,6 +2,7 @@ import axios, {
     AxiosResponse,
     AxiosRequestConfig,
 } from "axios";
+import { IRequestParams } from "../../shared/types/api";
 import { UnknownError } from "../../shared/types/error";
 import { ISession } from "../../shared/types/session";
 import { store } from "../state/store";
@@ -28,8 +29,9 @@ export class CommonService {
     public async apiPost<TInputParams, TOutputParams>(url: string, params: TInputParams, session?: ISession) {
         const language = store.getState().language.value;
 
+        const data: IRequestParams<TInputParams> = {...params, session, language};
         const config: AxiosRequestConfig = {
-            data: {...params, session, language},
+            data,
             timeout: AXIOS_TIMEOUT,
         };
         
