@@ -2,8 +2,8 @@ import {useDispatch} from "react-redux";
 import {setProfile} from "../../state/profile";
 import {useEffect} from "react";
 import {NotificationService} from "../../service/notification";
-import {IEvent} from "../../types/event";
-import {IProfile} from "../../types/profile";
+import {IEvent} from "../../../shared/types/event";
+import {IProfile} from "../../../shared/types/profile";
 
 export interface IProfileProviderProps {
     children: any;

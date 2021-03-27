@@ -4,7 +4,7 @@ import {AuthService} from "../../service/auth";
 import {Form, IFormField} from "../form/form2";
 import {useHistory} from "react-router";
 import {Link} from "@material-ui/core";
-import { IMenuUrls } from "../../types/menu";
+import { IMenuUrls } from "../../client-types/menu";
 import { ILocalizationCategory, ILocalizationResource } from "../../../shared/types/localization";
 import { localization } from "../../service/localization";
 import { selectLanguage } from "../../state/root";

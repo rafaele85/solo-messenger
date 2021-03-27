@@ -1,12 +1,13 @@
 import {NotificationService} from "./notification";
 
-import {IEvent} from "../types/event";
+import {IEvent} from "../../shared/types/event";
 import {CommonService} from "./common";
 import {sha256} from "js-sha256";
 import {IAuth, IProfileData, ISignInData, ISignUpData} from "../../shared/types/auth";
-import {IProfile} from "../types/profile";
+import {IProfile} from "../../shared/types/profile";
 import { APIResources } from "../../shared/types/api";
 import { ILocalizationResource } from "../../shared/types/localization";
+import { SocketIOService } from './socket-io-service';
 
 export class AuthService extends CommonService {
     private static readonly _instance = new AuthService();
@@ -14,10 +15,11 @@ export class AuthService extends CommonService {
         return AuthService._instance;
     }
 
-    public async signIn(username: string, password: string) {
+    public async signIn(username: string, password: string) {        
         const ttlSigninError=ILocalizationResource.ERROR_LOGINFAILED;
         const url = this.getAPIBaseURL()+APIResources.LOGIN;
         const hashPassword = sha256(password);
+        console.log(`AuthService.signIn username=${username} hashpassword=${hashPassword}`)
         const signInData: ISignInData = {username, hashPassword};
         let authData;
         try {
@@ -25,6 +27,7 @@ export class AuthService extends CommonService {
             NotificationService.instance().notify(IEvent.AUTH, undefined, authData);
             if(authData) {
                 const profile: IProfile = { name: authData?.name};
+                SocketIOService.instance().initialize(authData.sessionkey);
                 NotificationService.instance().notify(IEvent.PROFILE, undefined, profile);
             }
             return;

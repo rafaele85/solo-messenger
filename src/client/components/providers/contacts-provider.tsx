@@ -1,8 +1,8 @@
-import {IContact} from "../../types/contact";
+import {IContact} from "../../../shared/types/contact";
 import {useDispatch} from "react-redux";
 import {useEffect} from "react";
 import {NotificationService} from "../../service/notification";
-import {IEvent} from "../../types/event";
+import {IEvent} from "../../../shared/types/event";
 import {setContacts} from "../../state/contacts";
 import {ContactService} from "../../service/contact";
 

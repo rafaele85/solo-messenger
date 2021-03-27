@@ -1,5 +1,5 @@
 import {uuid} from "./uuid";
-import {IEvent} from "../types/event";
+import {IEvent} from "../../shared/types/event";
 
 type IEventPayload = any;
 type IEventListener = (payload: IEventPayload) => void;
@@ -45,8 +45,9 @@ export class NotificationService {
         }
         const eventListeners = this.listeners.get(strevent) || new Map<IListenerId, IEventListener>();
         console.log(`strevent=${strevent} listeners = ${eventListeners.size}`)
-        if(!eventListeners) {
+        if(!eventListeners || eventListeners.size===0) {
             console.warn(`no listeners found for event ${strevent}`);
+            console.dir(this.listeners)
             return;
         }
         eventListeners.forEach((listener: IEventListener) => {

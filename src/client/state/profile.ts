@@ -1,5 +1,5 @@
 import {GenericState, IGenericState} from './generic';
-import {IProfile} from "../types/profile";
+import {IProfile} from "../../shared/types/profile";
 
 export type IProfileState = IGenericState<IProfile|undefined>;
 

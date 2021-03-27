@@ -5,9 +5,9 @@ import {useSelector} from "react-redux";
 import { selectContacts, selectLanguage} from "../../state/root";
 import AddIcon from "@material-ui/icons/AddCircleOutlined";
 import {ContactMenuItem} from "./contact-menu-item";
-import {IContact} from "../../types/contact";
+import {IContact} from "../../../shared/types/contact";
 import {useHistory, useParams} from "react-router";
-import { IMenuUrls } from "../../types/menu";
+import { IMenuUrls } from "../../client-types/menu";
 import { ILocalizationCategory, ILocalizationResource } from "../../../shared/types/localization";
 import { localization } from "../../service/localization";
 

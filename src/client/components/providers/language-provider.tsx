@@ -1,4 +1,4 @@
-import {IEvent} from "../../types/event";
+import {IEvent} from "../../../shared/types/event";
 import {useEffect} from "react";
 import {useDispatch} from "react-redux";
 import {NotificationService} from "../../service/notification";

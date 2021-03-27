@@ -5,7 +5,7 @@ import {useSelector} from "react-redux";
 import {selectLanguage, selectProfile} from "../../state/root";
 import {useHistory} from "react-router";
 import {Form, IFormField} from "../form/form2";
-import { IMenuUrls } from "../../types/menu";
+import { IMenuUrls } from "../../client-types/menu";
 import { localization } from './../../service/localization';
 import { ILocalizationCategory, ILocalizationResource } from "../../../shared/types/localization";
 

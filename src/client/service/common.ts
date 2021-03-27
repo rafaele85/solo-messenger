@@ -36,7 +36,9 @@ export class CommonService {
         };
         
         try {
-            const res:AxiosResponse<TOutputParams> = await axios.post<TOutputParams, AxiosResponse<TOutputParams>>(url, config);            
+            console.log(`CommonService post url=${url} config=`, config)
+            const res: AxiosResponse<TOutputParams> = await axios.post<TOutputParams, AxiosResponse<TOutputParams>>(url, config);            
+            console.log(`CommonService res=`, res)
             return res.data;
         } catch(err) {
             console.error("Error:");

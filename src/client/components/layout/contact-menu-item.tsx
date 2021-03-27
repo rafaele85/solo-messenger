@@ -1,4 +1,4 @@
-import {IContact} from "../../types/contact";
+import {IContact} from "../../../shared/types/contact";
 import {makeStyles, Theme} from "@material-ui/core";
 
 export interface IContactMenuItemProps {

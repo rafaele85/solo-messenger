@@ -155,3 +155,6 @@ addl(`${ILocalizationCategory.ADDCONTACT}.${ILocalizationResource.CONTACTLIST}`,
 addl(`${ILocalizationCategory.ADDCONTACT}.${ILocalizationResource.ERROR_CONTACTNOTSELECTED}`,
     "Contact is not selected", "Не выбран контакт"
 );
+addl(`${ILocalizationCategory.CHAT}.${ILocalizationResource.TYPEMESSAGE}`,
+    "Type message...", "Ведите сообщение..."
+);

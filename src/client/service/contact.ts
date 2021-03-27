@@ -1,9 +1,9 @@
 import {NotificationService} from "./notification";
-import {IEvent} from "../types/event";
+import {IEvent} from "../../shared/types/event";
 import {CommonService} from "./common";
-import {IContact, IFriendAdd, IMatchingContactListQuery, testContacts} from "../types/contact";
+import {IContact, IFriendAdd, IMatchingContactListQuery, testContacts} from "../../shared/types/contact";
 import { APIResources } from "../../shared/types/api";
-import { IContactShort1 } from './../types/contact';
+import { IContactShort1 } from '../../shared/types/contact';
 import { ID_TYPE } from "../../shared/types/id-type";
 
 export class ContactService extends CommonService {

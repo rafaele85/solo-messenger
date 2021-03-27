@@ -1,4 +1,4 @@
-import {ID_TYPE} from "../../shared/types/id-type";
+import {ID_TYPE} from "./id-type";
 
 export interface IContactShort1 {
     id: ID_TYPE;

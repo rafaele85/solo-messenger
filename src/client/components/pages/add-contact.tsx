@@ -1,12 +1,12 @@
 import {StyledLayout} from "../layout/styled-layout";
 import {Form, IFormField} from "../form/form2";
 import {useEffect, useState} from "react";
-import { IMenuUrls } from "../../types/menu";
+import { IMenuUrls } from "../../client-types/menu";
 import { localization } from './../../service/localization';
 import { ILocalizationCategory, ILocalizationResource } from "../../../shared/types/localization";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../state/root";
-import { IContactShort1 } from "../../types/contact";
+import { IContactShort1 } from "../../../shared/types/contact";
 import { ID_TYPE } from "../../../shared/types/id-type";
 import { ContactService } from './../../service/contact';
 

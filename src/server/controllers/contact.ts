@@ -4,7 +4,7 @@ import { APIResources } from "../../shared/types/api";
 import { APIController } from './api';
 import { ILanguage } from "../../shared/types/language";
 import { ISession } from "../../shared/types/session";
-import { IContact, IContactShort1, IFriendAdd, IMatchingContactListQuery } from '../../client/types/contact';
+import { IContact, IContactShort1, IFriendAdd, IMatchingContactListQuery } from '../../shared/types/contact';
 import { parseQueryResultArray } from '../util/query-parse';
 import { ID_TYPE } from '../../shared/types/id-type';
 

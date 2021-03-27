@@ -22,6 +22,8 @@ buildpostgres:
 	$(runpostgres) create-function-usersignup.sql
 	$(runpostgres) create-function-my-contacts-list.sql
 	$(runpostgres) create-function-matching-contact-list.sql
+	$(runpostgres) create-function-messages-list.sql
+	$(runpostgres) create-function-message-send.sql
 
 all: buildpostgres
 

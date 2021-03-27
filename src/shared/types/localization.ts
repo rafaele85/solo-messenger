@@ -41,4 +41,5 @@ export enum ILocalizationResource {
     MYCONTACTS_MENU="mycontacts_menu",
     CONTACTLIST="contactlist",
     ERROR_CONTACTNOTSELECTED="error_contactnotselected",
+    TYPEMESSAGE="typemessage",
 }

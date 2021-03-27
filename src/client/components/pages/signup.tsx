@@ -6,7 +6,7 @@ import { ILocalizationCategory, ILocalizationResource } from "../../../shared/ty
 import { AuthService } from "../../service/auth";
 import { localization } from "../../service/localization";
 import { selectLanguage } from "../../state/root";
-import { IMenuUrls } from "../../types/menu";
+import { IMenuUrls } from "../../client-types/menu";
 import { Form, IFormField } from "../form/form2";
 import { StyledLayout } from "../layout/styled-layout";
 

@@ -2,14 +2,17 @@ import express from "express";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import cors from "cors";
+import http from "http";
 import { APIController } from "./controllers/api";
 import { AuthController } from "./controllers/auth";
 import { ContactController } from "./controllers/contact";
-
+import { MessageController } from "./controllers/message";
+import { SocketIOServer } from "./socket-io-server";
 
 const initializeControllers = () => {
     AuthController.initialize();    
     ContactController.initialize();    
+    MessageController.initialize();    
 }
 
 const startApp = () => {
@@ -29,13 +32,16 @@ const startApp = () => {
         app.use(express.json());
         app.use(express.urlencoded({extended: true}));
 
+        const httpServer = http.createServer(app);
+
         initializeControllers();
+        SocketIOServer.instance().initialize(httpServer);
         
         app.use("/api", APIController.getRouter());
     
         console.log(`HOST=${HOST} PORT=${PORT}`)
     
-        app.listen(PORT, HOST, () => {
+        httpServer.listen(PORT, HOST, () => {
             console.log(`listening ${HOST}:${PORT}`);
         }); 
 

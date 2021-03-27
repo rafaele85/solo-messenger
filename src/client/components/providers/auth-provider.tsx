@@ -1,4 +1,4 @@
-import {IEvent} from "../../types/event";
+import {IEvent} from "../../../shared/types/event";
 import {useEffect} from "react";
 import {IAuth} from "../../../shared/types/auth";
 import {setAuth} from "../../state/auth";

@@ -1,5 +1,5 @@
 import {GenericState, IGenericState} from './generic';
-import {IContact} from "../types/contact";
+import {IContact} from "../../shared/types/contact";
 
 export type IContactsState = IGenericState<IContact[]>;
 

@@ -1,22 +1,31 @@
 import { ChangeEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { selectLanguage } from '../state/root';
-import { setLanguage } from './../state/language';
 import { NotificationService } from './../service/notification';
-import { IEvent } from '../types/event';
+import { IEvent } from '../../shared/types/event';
 import { defaultLanguage } from '../../shared/types/language';
+import { makeStyles, Theme } from '@material-ui/core';
+
+const useStyle = makeStyles((theme: Theme) => {
+    return {
+        select: {
+            background: theme.palette.divider,
+        }
+    }
+});
 
 export const LanguageSelector = () => {
     const lang = useSelector(selectLanguage) || defaultLanguage();
 
-    const dispatch = useDispatch();
+    const classes = useStyle();
+
     const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
         const lang = e.target.value;
         NotificationService.instance().notify(IEvent.LANGUAGE, undefined, lang);
     };
 
     return (
-        <select onChange = {handleChange} value={lang}>
+        <select onChange = {handleChange} value={lang} className={classes.select}>
             <option value="ru" key="ru" >Rus</option>
             <option value="en" key="en" >En</option>
         </select>

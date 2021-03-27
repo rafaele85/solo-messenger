@@ -10,6 +10,8 @@ export enum APIResources {
     MYCONTACTSLIST="/contact/my-contacts-list",
     MATCHINGCONTACTLIST="/contact/matching-contacts-list",
     FRIENDADD="/contact/friend-add",
+    MESSAGESEND="/message/send",
+    MESSAGELIST="/message/list",
 }
 
 export type IRequestParams<TInputParams> = TInputParams & {session?: ISession, language?: ILanguage, messageId?: ID_TYPE};
