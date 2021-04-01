@@ -10,7 +10,7 @@ import { LanguageProvider } from "./providers/language-provider";
 interface IAppProps {
 }
 
-export const App = (props: IAppProps) => {
+export const App = (_props: IAppProps) => {
     const theme = createMuiTheme({palette: {type: "dark"}});
     return (
         <MuiThemeProvider theme={theme}>
@@ -30,3 +30,4 @@ export const App = (props: IAppProps) => {
 }
 
 
+const theme = createMuiTheme({palette: {type: "dark"}});

@@ -1,5 +1,5 @@
-import {uuid} from "./uuid";
 import {IEvent} from "../../shared/types/event";
+import {suuid} from "../../shared/service/uuid";
 
 type IEventPayload = any;
 type IEventListener = (payload: IEventPayload) => void;
@@ -11,6 +11,9 @@ export class NotificationService {
     public static instance() {
         return NotificationService._instance;
     }
+    private constructor() {
+             
+    }
 
     private listeners = new Map<string, IEventListenerList>();
 
@@ -20,7 +23,7 @@ export class NotificationService {
             strevent = strevent+subtype;
         }
         const eventListeners = this.listeners.get(strevent) || new Map<IListenerId, IEventListener>();
-        const listenerId = uuid();
+        const listenerId = suuid();
         eventListeners.set(listenerId, listener);
         this.listeners.set(strevent, eventListeners);
         return listenerId;

@@ -22,21 +22,25 @@ export const localization = (category: string, lang: ILanguage|undefined) => {
         if(val) {
             return val;
         }
+        console.warn(`Not found key localization for key ${key}`)
         key = `general.${resource}.${lang}`;
         val = localizations.get(key);
         if(val) {
             return val;
         }
+        console.warn(`Not found key localization for key ${key}`)
         key = `${category}.${resource}.${defaultLang}`;
         val = localizations.get(key);
         if(val) {
             return val;
         }
+        console.warn(`Not found key localization for key ${key}`)
         key = `general.${resource}.${defaultLang}`;
         val = localizations.get(key);
         if(val) {
             return val;
         }
+        console.warn(`Not found key localization for key ${key}`)
         return resource;
     }
 };
@@ -115,6 +119,11 @@ addl(`${ILocalizationCategory.SIGNIN}.${ILocalizationResource.DOSIGNUP}`,
 addl(`${ILocalizationCategory.SIGNIN}.${ILocalizationResource.SUBMITBUTTON}`,
     "SIGNIN", "ВХОД"
 );
+
+
+addl(`${ILocalizationCategory.SIGNUP}.${ILocalizationResource.TITLE}`,
+    "Sign up for Chat", "Регистрация пользователя"
+);
 addl(`${ILocalizationCategory.SIGNUP}.${ILocalizationResource.FORMTITLE}`,
     "Sign up for Chat", "Регистрация пользователя"
 );
@@ -127,6 +136,8 @@ addl(`${ILocalizationCategory.SIGNUP}.${ILocalizationResource.HAVEACCT}`,
 addl(`${ILocalizationCategory.SIGNUP}.${ILocalizationResource.DOSIGNIN}`,
     "Sign in", "Войти"
 );
+
+
 addl(`${ILocalizationCategory.GENERAL}.${ILocalizationResource.ERROR_LOGINFAILED}`,
     "Sign in failed", "Ошибка при входе в систему"
 );
@@ -158,3 +169,13 @@ addl(`${ILocalizationCategory.ADDCONTACT}.${ILocalizationResource.ERROR_CONTACTN
 addl(`${ILocalizationCategory.CHAT}.${ILocalizationResource.TYPEMESSAGE}`,
     "Type message...", "Ведите сообщение..."
 );
+addl(`${ILocalizationCategory.PROFILE}.${ILocalizationResource.AVATAR}`,
+    "Upload your avatar", "Загрузите ваш аватар"
+);
+addl(`${ILocalizationCategory.HOME}.${ILocalizationResource.SELECTCONTACT}`,
+    "Select a contact to begin chatting", "Выберите контакт чтобы начать чат"
+);
+addl(`${ILocalizationCategory.HOME}.${ILocalizationResource.TITLE}`,
+    "Chat", "Чат"
+);
+

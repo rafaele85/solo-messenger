@@ -13,9 +13,15 @@ export type IMatchingContactListQuery = {
     query: string
 };
 
-export type IFriendAdd = {
-    friendId: ID_TYPE;
+export type IContactRequestData = {
+    contactId: ID_TYPE;
+    message?: string;
 }
+
+export type IContactIdData = {
+    contactId: ID_TYPE;
+}
+
 
 export const testContactsShort1: IContactShort1[] = [
     {id: "1", name: "Mike Buher"},

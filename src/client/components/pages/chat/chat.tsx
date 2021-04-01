@@ -1,17 +1,33 @@
 import {StyledLayout} from "../../layout/styled-layout";
 import {useParams} from "react-router";
-import {useDispatch, useSelector} from "react-redux";
-import {selectContacts, selectLanguage} from "../../../state/root";
+import {useSelector} from "react-redux";
+import {selectLanguage} from "../../../state/root";
 import {IContact} from "../../../../shared/types/contact";
-import { localization } from '../../../service/localization';
-import { ILocalizationCategory, ILocalizationResource } from "../../../../shared/types/localization";
+import {localization} from '../../../service/localization';
+import {ILocalizationCategory, ILocalizationResource} from "../../../../shared/types/localization";
 import {ChatInput} from "./chat-input";
-import React, { useEffect } from "react";
-import { setSelectedContactId } from "../../../state/selectedContactId";
-import { ChatMessages } from "./chat-messages";
+import React, {useEffect, useState} from "react";
+import {ChatMessages} from "./chat-messages";
+import {ContactService} from "../../../service/contact";
+import {ID_TYPE} from "../../../../shared/types/id-type";
+import {NotificationService} from "../../../service/notification";
+import {IEvent} from "../../../../shared/types/event";
+import {makeStyles, Theme} from "@material-ui/core";
 
-
-export const Chat = () => {    
+const useStyles = makeStyles((theme: Theme) => {
+    return {
+        chat: {
+            flex: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            width: "100%",
+            height: "calc(100% - 45px)",
+        },
+    }
+}, {name: "chat"});
+export const Chat = () => {
+    const classes = useStyles();
     const lang = useSelector(selectLanguage);
     const t = localization(ILocalizationCategory.CHAT, lang);
     const ttlChatWith = t(ILocalizationResource.CHATWITH)||"Чат с ";
@@ -19,22 +35,48 @@ export const Chat = () => {
     const params = useParams<{id: string}>();
     const id = params.id;
 
-    const dispatch = useDispatch();
+    const [currentContact, setCurrentContact] = useState<IContact|undefined>(undefined);
+
+    const handleContactChange = (payload: IContact, mounted: boolean) => {
+        if(mounted) {
+            setCurrentContact(payload);
+        }
+    };
 
     useEffect( () => {
-        dispatch(setSelectedContactId(id));
-    }, [id, dispatch]);
+        let mounted=true;
+        let currentContactListenerId: ID_TYPE|undefined=undefined;
+        const fetchData = async () => {
+            try {
+                const cc = await ContactService.instance().contactGet(id);
+                setCurrentContact(cc);
+                currentContactListenerId = NotificationService.instance().subscribe(IEvent.CONTACTCHANGE,
+                    undefined, (payload: IContact) => handleContactChange(payload, mounted)
+                );
+            } catch(err) {
+                console.error(err);
+            }
+        };
 
-    const contacts = useSelector(selectContacts) || [];
-    const currentContact = contacts.find( (c: IContact) => c.id===id);
-    console.log(`Chat: id=${id} currentContact=${currentContact} contacts=`)
-    console.dir(contacts);
- 
+        if(mounted) {
+            fetchData();
+        }
+
+        return () => {
+           mounted=false;
+           if(currentContactListenerId) {
+               NotificationService.instance().unsubscribe(IEvent.CONTACTCHANGE,  undefined, currentContactListenerId);
+           }
+        }
+    }, [params.id]);
+
     const title = `${ttlChatWith} ${currentContact?.name}`;
     return (
         <StyledLayout title={title}>
-            <ChatMessages selectedContactId={id}/>            
-            <ChatInput  selectedContactId={id} />
+            <div className={classes.chat}>
+                <ChatMessages selectedContactId={id}/>
+                <ChatInput selectedContactId={id} />
+            </div>
         </StyledLayout>
     )
 }

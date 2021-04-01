@@ -1,11 +1,17 @@
 
 export enum IEvent {
     AUTH="auth",
-    CONTACTS="contacts",
-    PROFILE="profile",
+    PROFILECHANGE="profile-change",
+
+    CONTACTLISTCHANGE="contact-list-change",
+    CONTACTCHANGE="contact=change",
+    CONTACTSELECT="contact-select",
+    CONTACTREQUESTACCEPT="contact-request-accept",
+
     LANGUAGE="language",
-    MESSAGES="messages",
-    NEWMESSAGE="newmessage",
+
+    MESSAGELISTCHANGE="message-list-change",
+    MESSAGECHANGE="message-change",
 }
 
 export type IEventPayload = any;

@@ -1,9 +1,9 @@
 
-#select * from UserLoginJSON('john', '054e3b308708370ea029dc2ebd1646c498d59d7203c9e1a44cf0484df98e581a', null);
+#select * from UserLoginJSON('john', '054e3b308708370ea029dc2ebd1646c498d59d7203c9e1a44cf0484df98e581a');
 
 drop function if exists UserLoginJSON;
 
-create or replace function UserLoginJSON(username "user".username%TYPE, hashPassword "user".hashpassword%TYPE, sessionkey session.sessionkey%TYPE)
+create or replace function UserLoginJSON(username "user".username%TYPE, hashPassword "user".hashpassword%TYPE)
 returns JSONB
 as $$
 declare
@@ -12,27 +12,21 @@ _hashpassword alias for hashPassword;
 _name user.name%TYPE;
 _id user.id%TYPE;
 _js JSONB;
-_sessionkey alias for sessionkey;
 begin
 
 
-select u.id, u.name into _id, _name from "user" u 
+select u.id  into _id from "user" u 
    where u.username=_username and u.hashpassword=_hashpassword;
 if _id is null then
    _js:='{"errors": {"error": "error_login_failed"} }';
-else
-   delete from session where session.userid = _id;
-   delete from session where session.sessionkey = _sessionkey;
+   return _js;
+end if;   
 
-   _sessionkey:=uuid_generate_v4()::varchar;
+select to_jsonb( array_agg(f.friendid) ) into _js from friend f 
+   where f.userid = _id;
 
-   insert into session(userid, sessionkey)
-   select _id, _sessionkey;
-   
-   select row_to_json(q) as auth from (select id::varchar, name, _sessionkey sessionKey from "user" where "user".id = _id) q into _js;
-   select jsetjson('{}', 'auth', _js) into _js;
-   call LOGJSONADD('signin', _js);
-end if;
+select jsetjson('{}', 'contactids', _js) into _js;
+select jsetstr(_js, 'userid', _id::varchar) into _js;
 
 return _js;
 

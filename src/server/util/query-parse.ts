@@ -49,7 +49,7 @@ export const isValidNonEmptyJSONObjectArray = (str: string) => {
 
 export function tryParseJSONArray<TArrayItem>(str: string) {
     if(typeof str === "object") {
-        return str as TArrayItem;
+        return str as TArrayItem[];
     }
     if(!isValidNonEmptyJSONObjectArray(str)) {
         return [] as TArrayItem[];
@@ -86,7 +86,7 @@ export function parseQueryResult<T>(result: IQueryResultJSON) {
     throw UnknownError();
 }
  
-export function parseQueryResultString<T>(result: IQueryResultJSON) {
+export function parseQueryResultString(result: IQueryResultJSON) {
     //const errors = result.strErrorsJSON; 
     const errors = tryParseJSON<IErrors>( result.strErrorsJSON || "");
     const payload = result.strPayloadJSON;

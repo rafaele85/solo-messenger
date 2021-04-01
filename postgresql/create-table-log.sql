@@ -1,5 +1,3 @@
-drop table if exists log;
-
 create table log(
   ts timestamp default now(),
   str text,

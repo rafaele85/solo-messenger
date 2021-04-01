@@ -11,9 +11,13 @@ const useStyles = makeStyles( (theme: Theme) => {
             marginTop: "15px",
         },
     }
-});
+}, {name: "input-field"});
 
-export const InputField = (props: IFormField) => {
+export interface IInputFieldProps extends IFormField<string> {
+
+}
+
+export const InputField = (props: IInputFieldProps) => {
     const classes = useStyles();
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

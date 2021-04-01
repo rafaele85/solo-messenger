@@ -1,25 +1,23 @@
-#select * from MatchingContactsListJSON('1212','4d77f9ba-4571-4ec3-95aa-018efabf78ac');
+#select * from MatchingContactsListJSON('1212', 4);
 
 drop function if exists MatchingContactsListJSON;
 
-create or replace function MatchingContactsListJSON(query varchar(40), sessionkey session.sessionkey%TYPE)
+create or replace function MatchingContactsListJSON(query varchar(40), userid "user".id%TYPE)
 returns JSONB
 as $$
 declare
 _js JSONB;
-_sessionkey alias for sessionkey;
-_userId "user".id%TYPE;
+_userId alias for userid;
 _query varchar(50);
 begin
 
 _query:=concat('%',query,'%');
 
-select s.userId into _userId from session s where s.sessionkey=_sessionkey;
 if _userId is null then
   _js:='{"errors": {"error": "error_unauthorized"} }';
   return _js;
 end if;
-
+ 
 select json_agg(q) into _js from (
    select u.id::varchar, u.name from "user" u
    where u.name like _query

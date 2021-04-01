@@ -3,8 +3,9 @@ import { IMessage } from "../../../../shared/types/message";
 import Avatar from "@material-ui/core/Avatar";
 import { ID_TYPE } from "../../../../shared/types/id-type";
 
-const formatMessageDate = (d: Date) => {
-    return d?.toLocaleDateString();
+const formatMessageDate = (d: number) => {
+    const dt = new Date(d);
+    return dt?.toLocaleDateString();
 }
 
 const useStyles = makeStyles((theme: Theme) => {

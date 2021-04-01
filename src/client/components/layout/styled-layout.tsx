@@ -1,17 +1,21 @@
-import styled from "styled-components";
 import {DrawerToggleButton} from "./drawer-toggle-button";
 import {makeStyles, Paper, Theme, Typography} from "@material-ui/core";
-import {useSelector} from "react-redux";
-import {selectAuth, selectProfile} from "../../state/root";
 import React, {useRef, useState} from "react";
 import {Menu} from "./menu";
 import {drawerWidth} from "../global-styles";
 import { LanguageSelector } from "../language-selector";
+import {AuthService} from "../../service/auth";
 
 
 const useStyles = makeStyles( (theme: Theme) => {
-    const dw = drawerWidth();
     return {
+        container: {
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            zIndex: 100,
+            height: "100%",
+        },
         sidebar: {
             flex: 0,
             display: "none",
@@ -33,13 +37,7 @@ const useStyles = makeStyles( (theme: Theme) => {
             },
             zIndex: 100,
         },
-        container: {
-            height: "100vh",
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            zIndex: 100,
-        },
+
         header: {
             flex: 0,
             display: "flex",
@@ -71,6 +69,7 @@ const useStyles = makeStyles( (theme: Theme) => {
         body: {
             display: "flex",
             flexDirection: "row",
+            flex: 1,
         },
         main: {
             flex: 1,
@@ -79,22 +78,20 @@ const useStyles = makeStyles( (theme: Theme) => {
             padding: "10px",
             justifyContent: "center",
             alignItems: "center",
+            height: "calc(100vh - 42px)",
         },
     };
-});
+}, {name: "layout"});
 
 export interface IStyledLayoutProps {
     title: string;
+    profileName?: string;
     children: any;
 }
 
 export const StyledLayout = (props: IStyledLayoutProps) => {
 
     const classes = useStyles();
-
-    const auth = useSelector(selectAuth);
-
-    const profile = useSelector(selectProfile);
 
     const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
@@ -116,7 +113,7 @@ export const StyledLayout = (props: IStyledLayoutProps) => {
     let jsxSidebar;
     let jsxMobileSidebar;
     let jsxMenu;
-    if(auth) {
+    if(AuthService.instance().isSignedIn()) {
         jsxDrawerToggleButton = (<DrawerToggleButton onClick={handleDrawerToggle} />);
 
         jsxMenu = (
@@ -124,9 +121,9 @@ export const StyledLayout = (props: IStyledLayoutProps) => {
         );
 
         jsxSidebar = (
-            <Sidebar className={classes.sidebar}>
+            <aside className={classes.sidebar}>
                 {jsxMenu}
-            </Sidebar>
+            </aside>
         );
         if(mobileOpen && headerRef && headerRef?.current) {
             const mobileSidebarHt = `calc(100% - ${headerRef.current.clientHeight}px)`;
@@ -135,53 +132,40 @@ export const StyledLayout = (props: IStyledLayoutProps) => {
                 height: mobileSidebarHt,
             };
             jsxMobileSidebar = (
-                <Sidebar className={classes.mobileSidebar} style={mobileSidebarStyle}>
+                <aside className={classes.mobileSidebar} style={mobileSidebarStyle}>
                     {jsxMenu}
-                </Sidebar>
+                </aside>
             );
         }
     }
 
     return (
-        <div className={classes.container}>
-            <Paper ref = {headerRef} className={classes.header}>
+        <div className={classes.container} id={"layout-container"}>
+            <Paper ref = {headerRef} className={classes.header} id={"paper"}>
                 <div className={classes.headerLeft}>
                     {jsxDrawerToggleButton}
                     <Typography variant="h6" noWrap>
                         {props.title}
-                    </Typography>                    
-                </div>                
-                <div className={classes.headerMiddle}>                    
+                    </Typography>
                 </div>
-                <div className={classes.headerRight}>
+                <div className={classes.headerMiddle}>
+                </div>
+                <div className={classes.headerRight} id={"profile-name"}>
                     <Typography variant="caption" noWrap>
-                        {auth && profile?.name}
+                        {props.profileName}
                     </Typography>
                     <LanguageSelector />
                 </div>
             </Paper>
-            <Body className={classes.body}>
+            <div className={classes.body} id={"layout-body"}>
                 {jsxSidebar}
                 {jsxMobileSidebar}
-                <main className={classes.main}>
+                <main className={classes.main} id={"layout-main"}>
                     {props.children}
                 </main>
 
-            </Body>
+            </div>
 
         </div>
     )
 };
-
-
-const Body = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: row;
-`;
-
-const Sidebar = styled.aside`
-
-`;
-
-

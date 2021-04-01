@@ -1,13 +1,12 @@
-import { PostgreSQLConnection } from './../db/db';
-import { parseQueryResult, parseQueryResultArray } from "./../util/query-parse";
+import { PostgreSQLConnection } from '../db/db';
+import { parseQueryResultArray } from "../util/query-parse";
 import { UnknownError } from "../../shared/types/error";
 import { ID_TYPE } from "../../shared/types/id-type";
 import { APIResources } from "../../shared/types/api";
 import { APIController } from './api';
 import { ILanguage } from "../../shared/types/language";
-import { ISession } from "../../shared/types/session";
-import { IMessage, IMessageContactIdData, IMessageSendData, IMessageSendResult } from './../../shared/types/message';
-import { SocketIOServer } from './../socket-io-server';
+import { IMessage, IMessageListData, IMessageSendData} from '../../shared/types/message';
+import { SocketIOServer } from '../socket-io-server';
 import { IEvent } from '../../shared/types/event';
 
 enum PSQLQuery {
@@ -22,13 +21,27 @@ export class MessageController {
         return MessageController._instance;
     }
 
+    private constructor() {
+    }
+
+
     public static initialize() {
         APIController.registerHandler(APIResources.MESSAGELIST, MessageController.instance().messagesList);
         APIController.registerHandler(APIResources.MESSAGESEND, MessageController.instance().messageSend);
     }
   
-    public async messagesList(payload: IMessageContactIdData, language: ILanguage, session: ISession, messageId?: ID_TYPE) {
+    public async messagesList(payload: IMessageListData, _language: ILanguage, userId: ID_TYPE|undefined, _messageId?: ID_TYPE) {
+        if(!userId) {
+            console.error("userId is blank")
+            throw UnknownError();
+        }
+
         const contactId = payload.contactId;
+
+        if(!contactId) {
+            console.error("contactId is blank")
+            throw UnknownError();
+        }
 
         let res;
         try {
@@ -36,8 +49,8 @@ export class MessageController {
             if(!db) {
                 throw UnknownError();
             }
-            console.log(`${PSQLQuery.LIST} ${contactId} ${session}`)
-            res = await db.one(PSQLQuery.LIST, [contactId, session]);
+            console.log(`${PSQLQuery.LIST} ${contactId} ${userId}`)
+            res = await db.one(PSQLQuery.LIST, [contactId, userId]);
             console.log(`${PSQLQuery.LIST} res=`)
             console.dir(res)
         } catch(err) {
@@ -46,11 +59,22 @@ export class MessageController {
         }
         
         const messages = parseQueryResultArray<IMessage>({strErrorsJSON: res?.res["errors"], strPayloadJSON: res?.res["messages"]}) || [];
+        console.log("messages=", messages)
         return messages;
     }
 
-    public async messageSend(payload: IMessageSendData, language: ILanguage, session: ISession, messageId?: ID_TYPE) {
+    public async messageSend(payload: IMessageSendData, _language: ILanguage, userId: ID_TYPE|undefined, _messageId?: ID_TYPE) {
+        if(!userId) {
+            console.error("userId is blank")
+            throw UnknownError();
+        }
+
         const contactId = payload.contactId;
+
+        if(!contactId) {
+            console.error("contactId is blank")
+            throw UnknownError();
+        }
         const message = payload.message;
 
         let res;
@@ -59,8 +83,8 @@ export class MessageController {
             if(!db) {
                 throw UnknownError();
             }
-            console.log(`${PSQLQuery.SEND} ${contactId} ${message} ${session}`)
-            res = await db.one(PSQLQuery.SEND, [contactId, message, session]);
+            console.log(`${PSQLQuery.SEND} ${contactId} ${message} ${userId}`)
+            res = await db.one(PSQLQuery.SEND, [contactId, message, userId]);
             console.log(`${PSQLQuery.SEND} res=`)
             console.dir(res)
 
@@ -69,14 +93,12 @@ export class MessageController {
             throw UnknownError();
         }
         
-        const result = parseQueryResult<IMessageSendResult>({strErrorsJSON: res?.res["errors"], strPayloadJSON: res?.res["result"]});
-        const tosession = result?.tosession;
-        const messages = result?.messages || [];
-        console.log(`tosession=${tosession}, messages=`, messages)
-        if(tosession) {
-            SocketIOServer.instance().sendEventToSession(IEvent.NEWMESSAGE, tosession, undefined);
-        }
-        return messages;
+        /*
+        - triggers NEWMESSAGE event sent to me
+        - triggers NEWMESSAGE event sent to friend (if they are online)
+        */
+        SocketIOServer.instance().sendEventToUserId(IEvent.MESSAGELISTCHANGE, contactId, undefined);
+        return {};
     }
 
  

@@ -1,10 +1,8 @@
 import {Button, makeStyles, Paper, Theme, Typography} from "@material-ui/core";
 import {TitleCard} from "../title-card";
-import {InputField} from "./input-field";
 import {useHistory} from "react-router";
 import {ValidationError} from "./validation-error";
 import {FormEvent} from "react";
-import {ListField} from "./list-field";
 
 const useStyles = makeStyles((theme: Theme) => {
     return {
@@ -27,34 +25,30 @@ const useStyles = makeStyles((theme: Theme) => {
             justifyContent: "space-between",
         }
     }
-});
+}, {name: "form2"});
  
-export interface IFormField {
+export interface IFormField<T> {
     name: string;
     label: string;
-    value?: string;
-    type?: "text"|"password"|"email"|"tel"|"list";
-    onChange: (v: string) => void;
+    value?: T;
+    type?: "text"|"password"|"email"|"tel";
+    onChange: (v: T|undefined) => void;
     error?: string;
     changed?: boolean;    
     autoFocus?: boolean;
-
-    listValues?: any[];
-    listLabelExtractor?: (obj: any) => string;
-    listValueExtractor?: (obj: any) => string;
 }
 
 export type IFormFieldValidateFunc = (value: string) => string;
 
 export interface IFormProps {
     title?: string;
-    fields: IFormField[];
     cancelLabel?: string;
     cancelUrl?: string;
     submitLabel?: string;
     onSubmit: () => void;
     submitDisabled?: boolean;
     error?: string;
+    children?: any;
 }
 
 export const Form = (props: IFormProps) => {
@@ -86,9 +80,6 @@ export const Form = (props: IFormProps) => {
         }
     };
 
-    const handleChange = (v: string, field: IFormField) => {
-        field.onChange(v);
-    };
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -133,49 +124,11 @@ export const Form = (props: IFormProps) => {
         )
     }
 
-    const jsxFields: JSX.Element[] = [];    
-    for(let i=0; i<props.fields.length; i++) {
-        const f = props.fields[i];
-        if(f.type==="list") {
-            jsxFields.push((
-                <ListField
-                    key={f.name}
-                    label={f.label}
-                    name={f.name}
-                    onChange={(v: string) => handleChange(v, f)}
-                    value={f.value}
-                    error={f.error}
-                    changed={f.changed}
-                    type={f.type}
-                    autoFocus={f.autoFocus}
-                    listValues={f.listValues}
-                    listLabelExtractor={f.listLabelExtractor}
-                    listValueExtractor={f.listValueExtractor}
-                />
-            ));
-        } else {
-            jsxFields.push((
-                <InputField
-                    key={f.name}
-                    label={f.label}
-                    name={f.name}
-                    onChange={(v: string) => handleChange(v, f)}
-                    value={f.value}
-                    error={f.error}
-                    changed={f.changed}
-                    type={f.type}
-                    autoFocus={f.autoFocus}
-                />
-            ));
-        }
-        
-    }
-
     return (
         <form autoComplete={"off"} noValidate onSubmit={handleSubmit}>
             <Paper className={classes.paper}>
                 {jsxTitle}
-                {jsxFields}
+                {props.children}
                 {jsxError}
                 {jsxButtons}
             </Paper>

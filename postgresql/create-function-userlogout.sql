@@ -1,19 +1,20 @@
-#select * from userLogoutJSON('725e3a21-39ce-4f7a-ba26-016e546ffb1f');
+#select * from userLogoutJSON(4);
 
 
 drop function if exists userLogoutJSON;
 
-create or replace function userLogoutJSON(sessionkey session.sessionkey%TYPE)
+create or replace function userLogoutJSON(userid "user".id%TYPE)
 returns JSONB
 as $$
 declare
-_sessionkey alias for sessionkey;
+_userid alias for userid;
 _js JSONB;
 begin
 
-delete from session s where s.sessionkey=_sessionkey;
+select to_jsonb( array_agg(f.friendid) ) into _js from friend f 
+   where f.userId = _userid;
 
-_js:=concat('{"session": "',_sessionkey,'"}');
+select jsetjson('{}', 'friendids', _js) into _js;
 
 return _js;
 

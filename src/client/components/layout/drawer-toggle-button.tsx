@@ -1,14 +1,16 @@
 import {IconButton, makeStyles, Theme} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
-const useDrawerToggleButtonStyles = makeStyles((theme: Theme) => ({
-    menuButton: {
-        marginRight: theme.spacing(2),
-        [theme.breakpoints.up("sm")]: {
-            display: "none"
-        }
-    },
-}));
+const useDrawerToggleButtonStyles = makeStyles((theme: Theme) => {
+    return {
+        menuButton: {
+            marginRight: theme.spacing(2),
+            [theme.breakpoints.up("sm")]: {
+                display: "none"
+            }
+        },
+    }
+}, {name: "drawer-toggle-button"});
 
 export interface IDrawerToggleButtonProps {
     onClick: () => void;

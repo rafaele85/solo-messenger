@@ -12,9 +12,15 @@ const useStyles = makeStyles( (theme: Theme) => {
             marginTop: "25px",
         },
     }
-});
+}, {name: "list-field"});
+
+export interface IListFieldProps extends IFormField<string> {
+    listValues?: any[];
+    listLabelExtractor?: (obj: any) => string;
+    listValueExtractor?: (obj: any) => string;
+}
  
-export const ListField = (props: IFormField) => {
+export const ListField = (props: IListFieldProps) => {
     const classes = useStyles();
 
     const handleClick = (v: string) => {

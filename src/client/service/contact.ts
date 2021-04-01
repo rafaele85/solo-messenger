@@ -1,7 +1,8 @@
-import {NotificationService} from "./notification";
-import {IEvent} from "../../shared/types/event";
 import {CommonService} from "./common";
-import {IContact, IFriendAdd, IMatchingContactListQuery, testContacts} from "../../shared/types/contact";
+import {
+    IContact, IContactIdData, IContactRequestData,
+    IMatchingContactListQuery,
+} from "../../shared/types/contact";
 import { APIResources } from "../../shared/types/api";
 import { IContactShort1 } from '../../shared/types/contact';
 import { ID_TYPE } from "../../shared/types/id-type";
@@ -11,24 +12,26 @@ export class ContactService extends CommonService {
     public static instance() {
         return ContactService._instance;
     }
+    private constructor() {
+        super();        
+    }
 
-    public async myList() {
-        const URL = this.getAPIBaseURL() + APIResources.MYCONTACTSLIST;
+    public async list() {
         try {
+            const URL = this.getAPIBaseURL() + APIResources.CONTACTLIST;
             const sessionkey = this.getSessionKey();
             let contacts: IContact[];
             contacts = await this.apiPost<undefined, IContact[]>(URL, undefined, sessionkey);
-            NotificationService.instance().notify(IEvent.CONTACTS, undefined, contacts);
-            return;
+            return contacts;
         } catch(err) {
             console.error(err);
             throw err;
         }
     }
 
-    public async matchingList(query: string) {
-        const URL = this.getAPIBaseURL() + APIResources.MATCHINGCONTACTLIST;
+    public async matchingList(query: string) {        
         try {
+            const URL = this.getAPIBaseURL() + APIResources.MATCHINGCONTACTLIST;
             const sessionkey = this.getSessionKey();
             let contacts: IContactShort1[];
             contacts = await this.apiPost<IMatchingContactListQuery, IContactShort1[]>(URL, {query}, sessionkey);
@@ -39,18 +42,60 @@ export class ContactService extends CommonService {
         }
     }
 
-    public async friendAdd(friendId: ID_TYPE) {
-        const URL = this.getAPIBaseURL() + APIResources.FRIENDADD;
+    public async contactRequest(contactId: ID_TYPE, message: string) {
         try {
+            const URL = this.getAPIBaseURL() + APIResources.CONTACTREQUEST;
             const sessionkey = this.getSessionKey();
-            const contacts = await this.apiPost<IFriendAdd, IContact[]>(URL, {friendId}, sessionkey);
-            console.log("friendAdd contacts=")
-            console.dir(contacts);
-            NotificationService.instance().notify(IEvent.CONTACTS, undefined, contacts);
+            const res = await this.apiPost<IContactRequestData, any>(URL, {contactId, message}, sessionkey);
+            console.log("friendRequest res=", res)
         } catch(err) {
             console.error(err);
             throw err;
         }
     }
+
+    public async contactAccept(contactId: ID_TYPE) {
+        try {
+            const URL = this.getAPIBaseURL() + APIResources.CONTACTACCEPT;
+            const sessionkey = this.getSessionKey();
+            const res = await this.apiPost<IContactIdData, any>(URL, {contactId}, sessionkey);
+            console.log("friendAdd res=")
+            console.dir(res);
+        } catch(err) {
+            console.error(err);
+            throw err;
+        }
+    }
+
+    public async contactSelect(contactId: ID_TYPE) {
+        try {
+            const URL = this.getAPIBaseURL() + APIResources.CONTACTSELECT;
+            const sessionkey = this.getSessionKey();
+            const res = await this.apiPost<IContactIdData, any>(URL, {contactId}, sessionkey);
+            console.log("contactSelect res=")
+            console.dir(res);
+        } catch(err) {
+            console.error(err);
+            throw err;
+        }
+    }
+
+
+
+    public async contactGet(contactId: ID_TYPE) {
+        try {
+            const URL = this.getAPIBaseURL() + APIResources.CONTACTGET;
+            const sessionkey = this.getSessionKey();
+            const res = await this.apiPost<IContactIdData, IContact>(URL, {contactId}, sessionkey);
+            console.log("contactGet res=")
+            console.dir(res);
+            return res;
+        } catch(err) {
+            console.error(err);
+            throw err;
+        }
+    }
+
+
 
 }

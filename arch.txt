@@ -1,0 +1,509 @@
+RestResources:
+
+UserController:
+    USERLOGIN
+    USERLOGOUT
+    USERSIGNUP
+    PROFILEGET
+    PROFILEUPDATE
+
+ContactController:
+    CONTACTLIST
+    MATCHINGCONTACTLIST
+    CONTACTSELECT
+    CONTACTREQUEST
+    CONTACTACCEPT
+
+MessageController:
+    MESSAGESEND
+    MESSAGELIST
+    MESSAGECHANGE
+    MESSAGEDELETE
+
+
+
+
+Events:
+   CONTACTCHANGE arg=Contact
+       1. sent from server to all my contacts (who are online) upon my login/logout
+          Client: update left contact list in state
+          Client (if selectedContact=Contact) : update header state
+
+       2. sent from server to my selectedContact (recepient) upon my messageSend if recepient is online and their
+          selected contact != sender
+          Client: update contact in left contact list (state) to reflect #unread messages
+
+       3. sent from server to all my online contacts upon my updating profile
+          Client: update contact in left contact list (state)
+          CLient: if selectedContact=me then update header
+
+       4. sent from server to requestor upon completing contactRequestAccept if requestor is online and
+          their selectedContact!=me
+            Client: update contact in left contact list state
+
+       5. sent from client (acceptor) upon completing contactRequestAccept with arg=requestorCOntact
+            Client: update contact in left contact list state
+            Client: update contact in header
+
+
+   CONTACTLISTCHANGE arg = ContactShort1[]
+      sent from server upon someone's contact request
+        Client: update left contact list state
+
+      sent from client upon accepting my contact request
+        Client: update left contact list state
+
+
+   MESSAGELISTCHANGE arg = Message[]
+      sent from server upon completing my messageSend to recepient if they are online and their selectedContact=me
+         Client: update messagte list state
+
+   PROFILECHANGE arg = Profile
+     sent from client upon completing profileUpdate
+        Client: update contact in left contact list state
+        Client: if selectedContact=profile contactId then update header state
+
+   CONTACTSELECT arg = contactId
+      sent from client upon returning from contact request
+      Client: history.push(/contact/contactId)
+
+   CONTACTREQUESTACCEPT arg = acceptorContact + messagelist with acceptor
+      sent from server upon completing COntactRequestAccept if requestor is online and their selectedCOntact = me
+        Client: update contact in left contact list
+        Client: if selectedContact=acceptor then update header state
+        Client: if selectedContact=acceptor then update message list state
+
+   MESSAGECHANGE arg=Message
+      sent from server upon sender completing MessageChange if receiver is online and receiver's selectedContact = sender
+      Client: update message in message list state
+
+------------------------------------------
+
+Main screen ->
+  useEffect get session object from localStorage and store it in state
+    if blank - render Login screen
+    if not blank -> render Home screen, header and menu
+
+Login ->
+   1. call parent's onLogin method (Main screen)
+      AuthService.login() -> USERLOGIN
+      UserLogin sp ->
+         verifies login and change status to online
+         returns user list of contacts ->
+         Server sends notifications CONTACTCHANGE to all online contacts (arg = contact object)
+         Return session objects back to client ->
+         Store session in localstorage
+         store session in state of Main screen
+
+
+   2. Render top header in UseEffect:
+      UserService.profileGet -> PROFILEGET
+          ProfileGet SP ->
+             return   Profile object back to client
+      save Profile object in state
+   3. Render contactList in UseEffect -> CONTACTLIST ->
+       ContactService.contactList ->
+           COntactListSP ->
+                return Contact[] (each with online status and #missed messages) back to clinet
+       Save Contact[] in state
+
+Signup ->
+   1. call parent's onLogin method (Main screen)
+      AuthService.signup() -> USERSIGNUP ->
+      UserSignup sp ->
+         verifies login, creates user object, and change status to online
+         returns session
+         Return session objects back to client
+         Store session in localstorage
+         Store session in state of Main screen
+
+   2. Render top header in UseEffect:
+      UserService.profileGet ->
+          ProfileGet SP ->
+             return   Profile object back to client
+      save Profile object in state
+   3. Render contactList in UseEffect ->
+       ContactService.contactList -> CONTACTLIST ->
+          ContactListSP ->
+                return Contact[] (each with online status and #missed messages) back to clinet
+       Save Contact[] in state
+
+
+User selects a contact to chat with
+   1. set selectetCOntact in Menu
+      save in state inside Menu
+   2. render Chat screen
+      in useEffect  call ContactService.contactSelected -> CONTACTSELECT->
+          SP ContactSelect ->
+             update
+             return contact object back to client ->
+      save in state inside Chat component
+
+   2. render Message list
+      in useEffect call MessageService.messageList -> MESSAGELIST
+         MessageList SP uses "selectedContactId" to retrieve last 20 messages with this contact ->
+         return Message[] back to client
+      store Message[] in state
+
+
+
+User sends new message
+   Call MessageService.messageSend -> MESSAGESEND ->
+       SP MessageSend adds message to message table ->
+          returns Message object, MessageList, my Contact object, and the contact to send it to ->
+              if the receiver is online and if their selectedContact = me then
+                   Send MESSAGELISTCHANGE notification to receiver (arg = Message object)
+              if the receiver is online and if their selectedContact != me
+                   Send CONTACTCHANGE notification to receiver (to update # if unseen msgs) (arg = my Contact object)
+             Return messagelist back to client ->
+     Update message list in state
+
+User opens Profile screen ->
+  in useEffect call UserService.profileGet -> PROFILEGET ->
+     SP ProfileGet returns Profile object ->
+     send it back to client ->
+  update profile in state
+
+User clicks Save Profile  ->
+  UserService.profileUpdate ->  PROFILEUPDATE ->
+     SP ProfileUpdate update profile in user table
+     return Profile object, Contact object and list of contacts to notify ->
+       send CONTACTCHANGE notification to all online contacts , passing arg=contact object
+       return Profile object back to client ->
+    Client: sends PROFILECHANGE notification with arg = Profile
+
+User logs out
+   Call parent screen onLogout (in main screen)
+      AuthService.logout -> USERLOGOUT ->
+         SP UserLogout updates status to offline , returns list of friends to notify and my Contact object ->
+         Send notification CONTACTCHANGE to all online friends, arg = my Contact object
+      remove session from local storage
+      remove session from state
+
+
+Contact search
+  ContactService.matchingCOntactList -> MATCHINGCONTACTLIST ->
+    SP matchingContactList returns 20 matching contacts ->
+    return ContactShort1[] back to client
+    store in state
+
+Contact request ->
+  ContactService.contactRequest -> CONTACTREQUEST ->
+    SP contactRequest adds message to messages table, adds record to contact table (status = unconfirmed)
+    changes my selectedContact to requested contact
+      returns requested contact's contactList (with new contact included), myContactList,
+      requested contact ID, my Contact object  ->
+        send notification CONTACTLISTCHANGE to requested contactId (arg = my Contact object)
+        return myContactList to client ->
+    Client: Clear query and matching contact list
+    Client: Send notification CONTACTLISTCHANGE arg=my contact list
+    Client: Send notification CONTACTSELECT arg = requested contact
+
+
+Contact request accept ->
+    ContactService.contactAccept -> CONTACTACCEPT ->
+        SP contactAccept updates record in contact table (status = confirmed) and removes request message
+           returns myContact object, message list, the requestor contact object (if they are online) ->
+           if requestor is online and their selectedCOntact = me
+               send notification CONTACTREQUESTACCEPT with arg= myContact + messagelist to requestor
+           if requestor is online and their selectedCOntact != me
+               send notification CONTACTCHANGE with arg= myContact to requestor
+       return requestorContact + message list to client ->
+          Client sends notification CONTACTCHANGE with arg = requestorCOntact
+          Client updates list of messages (state)
+
+
+Message change ->
+   MessageService.messageChange -> MESSAGECHANGE ->
+      SP messageChange updates record in message table and returns Message and
+          recepient ContactID if they are online  and their selectedContactId=me ->
+         send notification MESSAGECHANGE to recepient contactID if they are online and their selectedContactId=me
+      return Message
+   client updates message in their messate list state
+
+Message delete -> MESSAGEDELETE ->
+   MessageService.messageDelete ->
+      SP messageDelete removes record in message table and returns deleted MessageID and
+          recepient ContactID if they are online  and their selectedContactId=me ->
+         send notification MESSAGELISTCHANGE to recepient contactID if they are online and their selectedContactId=me
+      return MessageID
+   client updates messages in their messate list state
+
+-------------------------------------------------------------
+
+
+Todo:
+
+Remove contact
+Account delete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------- OLD STUFF -----
+
+Data in redux:
+  auth - contains session
+  profile - contains name, avatar
+  contactlist - contains list of contacts (id, name, online status, num-unread-messages)
+  selectedContact - contains id and name 
+
+Data outside redux:
+  messagelist - contains list of messages with selectedContact
+
+
+
+there are 2 kinds of server requests:
+- actions:
+  - login
+  - logout
+  - signup
+  - profileupdate
+  - friendrequest
+  - friendadd
+  - messagesend
+(todo)
+  - messageupdate
+  - messagedelete
+  - contactdelete (i.e. unfriend)
+  - accountdelete
+
+- retrieve data:
+  - profileget
+  - contactsget
+  - messagesget <contactid>
+  - contactget <contactid>
+  - messageget <messageid>
+  
+Actions perform update to data in DB.
+They may trigger events that are sent to current user and optionally to 
+some logged in friends.
+
+Actions
+----------------------
+
+login action
+- creates and returns session 
+- triggers event CONTACTCHANGED <contactId> sent to all friends who are online
+
+logout action
+- destroys session 
+- triggers event CONTACTCHANGED <contactId> sent to all friends who are online
+
+signup action
+- creates and returns session 
+
+profileupdate action
+- saves changes to profile
+- triggers event CONTACTCHANGED <contactID> sent to all friends who are online
+- (frontend) trigger PROFILECHANGED event 
+
+friendrequest action
+- adds record to friend table with confirmed=false
+- adds friendrequest message
+- triggers event CONTACTCHANGED <myId> sent to friend who we are requesting (if they are online)
+- (frontend) adds contact to my contact list with the friend request message
+
+friendadd action
+- adds friend to me, add me to friend
+- sets friend.confirmed=true
+- triggers CONTACTCHANGED <friendId> event sent to me
+- triggers CONTACTCHANGED <myId> event sent to requestor (if they are online)
+
+messagesend action
+- adds message to table messages
+- triggers MESSAGECHANGED <contactId, messageId> event sent to friend (if they are online)
+- (frontend) adds message to the messagelist component and 
+- if #messages>MAX, removes oldest message
+- (frontend) if selectedContactId!=friendId then trigger CONTACTCHANGED event
+
+(todo)
+
+messageupdate action
+- updates message in table messages
+- triggers MESSAGECHANGED <messageId> event sent to receiver (if they are online)
+- (frontend) updates message in the messagelist component
+
+messagedelete action
+- deletes message from table messages
+- triggers MESSAGESCHANGED <myId>sent to receiver (if they are online)
+- triggers MESSAGESCHANGED <friendId> sent to me 
+- (frontend) - refresh message list from server
+- (frontend) - optionally trigger CONTACTCHANGED event if selectedContactId != friendId
+
+contactdelete action
+- deletes friendship from friend table (i.e. deletes both records)
+- triggers CONTACTCHANGED <myId> event sent to the friend (if they are online)
+- (frontend) deletes friend from my contactlist
+
+accountdelete action
+- deletes record from user table and deletes all records from friend table where userId or friendId = current id
+- logs out current user and deletes their session
+- triggers CONTACTCHANGED event sent to all friends (who are online)
+
+
+
+Data retrieval requests
+----------------------
+
+profileget
+
+Used in: 
+  layout header
+  profile edit screen
+
+Invoked upon:
+  - creation of profile-provider
+  - any PROFILECHANGED event
+
+Profile data is stored in redux store.
+It is updated by profile-provider component (because only components can 
+trigger dispatch)
+ProfileProvider should subscribe to PROFILECHANGED event 
+in useEffect with  flipflop flag inverted upon any PROFILECHANGED event
+The useEffect will pull fresh profile data useing profileGet method.
+
+Both top header and profile edit screen should use useSelect to retrieve 
+data from store.
+
+Profile edit screen should retrieve data only once (inside useEffect with 
+no deps) and top header should retrieve data with updates 
+(useSelect on every render)
+
+
+
+contactsget
+
+used in 
+ - contact list on the left
+
+Invoked upon:
+  - creation of ContactsProvider component, one-time inside useEffect with 
+  no deps
+  - upon CONTACTSCHANGED event
+
+Stored in: redux store
+ContactsProvider should subscribe to CONTACTCHANGED event,
+CONTACTSCHANGED event 
+
+Upon CONTACTCHANGED event  ContactsProvider should call contactGet 
+and once receives response it should update contact list in the redux store.
+
+Upon CONTACTSCHANGED event ContactsProvider should call contactsList
+and once receives response it should update contact list in the redux store.
+
+contactget 
+   used in:
+      left contact list
+      top contact name of current chat
+
+Invoked upon
+- CONTACTCHANGED event <contactId>
+- MESSAGESCHANGE event (in order to update # unread messages)  if it is NOT our current chat contactId
+
+ContactsProvider should subscribe to CONTACTCHANGED event and MESSAGECHANGED event
+Upon either of these events ContactsProvider should call contactGet 
+and once receives response it should 
+
+- delete old record with this contact Id from our current contactlist on client
+- add new record (if it is not blank) to our current contactlist on client
+- rearrange the list by sort criteria
+- put updated list to redux store via disspatch
+
+- if we are currently chatting with them
+  - if contact does not exist anymore - close chat and go back to Home screen
+  - if contact still exists, update contact info on the chat top screen
+
+
+messagesget
+
+Invoked upon:
+- one time upon creation of Chat component / change id of Chat component
+in useEffect with no params
+- upon MESSAGESCHANGED event if contactId is selectedContactId
+
+
+messageget
+
+Invoked upon:
+- MESSAGECHANGE event , only if it is messages of current chat contactId
+Done in messagelist component directly call server upone receipt of 
+messagechange event
+
+
+------------
+
+Data aware components:
+
+AuthProvider ?
+
+ProfileProvider - reads profile and subscribes to profile change to 
+   update profile in store
+
+ContactsProvider - reads contact list and subscribes to 
+   contactchanged/messagechanged
+   events to update contact list in store, as well as to selectedContact in store
+   Note: it should not react to messagechanged with selectedContactId, only with other contactIds
+
+messagelist - reads messages from server and subscribes to messagechanged event 
+    to pull message from server and update list of messages with current contact
+Note: it should only react to messagechanged with selectedContactId
+
+Upon receiving MESSAGECHANGE event it should
+- check if it is message with current chat friend, if not - skip
+- retrieve message by id from server
+- update messages list :
+  - remove this message from list
+  - (if no blank) insert updated message to list
+  - rearrange list by time
+  
+
+  EVENTS:
+
+  AUTH
+    - triggered from AuthService after successful login or signup or logout
+    - caught by AuthProvider and used to update store auth
+
+  PROFILECHANGED - update both top header .
+  Triggered on client only in  service after return from profileupdate
+
+  CONTACTSCHANGED - updates left contact list. Triggered from server upon
+  - friendrequest
+  - (todo) contactdelete
+  - (todo) accountdelete
+
+  CONTACTCHANGED - updates both left list (name, unread, onlinesttus) 
+  and current chat header (name)
+  
+  Triggered from server upon:
+  - profileupdate, login, logout, friendadd
+
+  Triggered from client upon:
+  MESSAGESCHANGED if friendId != selectedContactId
+
+
+  MESSAGESCHANGED - updates list of messages (if selectedContactId)
+     or triggers CONTACTCHANGED (if not selectedContactId)
+  Triggered from server upon
+    - messageSend
+    - (todo) messageDelete
+
+   MESSAGECHANGED - updates message in current list of messages (if selectedContactId)
+
+   Triggered from server upon
+     - (todo) messageUpdate

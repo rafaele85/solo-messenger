@@ -7,8 +7,9 @@ import { AuthService } from "../../service/auth";
 import { localization } from "../../service/localization";
 import { selectLanguage } from "../../state/root";
 import { IMenuUrls } from "../../client-types/menu";
-import { Form, IFormField } from "../form/form2";
+import { Form} from "../form/form2";
 import { StyledLayout } from "../layout/styled-layout";
+import {InputField} from "../form/input-field";
 
 export const SignUp = () => {
     const lang = useSelector(selectLanguage);
@@ -35,10 +36,10 @@ export const SignUp = () => {
 
     const history = useHistory();
 
-    const [username, setUsername] = useState<string>("");
-    const [name, setName] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [username, setUsername] = useState<string|undefined>("");
+    const [name, setName] = useState<string|undefined>("");
+    const [password, setPassword] = useState<string|undefined>("");
+    const [confirmPassword, setConfirmPassword] = useState<string|undefined>("");
 
     const [nameError, setNameError] = useState<string>("");
     const [usernameError, setUsernameError] = useState<string>("");
@@ -52,33 +53,33 @@ export const SignUp = () => {
 
     const [error, setError] = useState<string>("");
 
-    const validateName = (v: string) => {
-        if(v.length<3) {
+    const validateName = (v: string|undefined) => {
+        if(!v || v.length<3) {
             return ttlNameLenError;
         }
         return "";
     };
 
-    const validateUsername = (v: string) => {
-        if(v.length<3) {
+    const validateUsername = (v: string|undefined) => {
+        if(!v || v.length<3) {
             return ttlUsernameLenError;
         }
         return "";
     };
-    const validatePassword = (v: string) => {
-        if(v.length<8) {
+    const validatePassword = (v: string|undefined) => {
+        if(!v || v.length<8) {
             return ttlPasswordLenError;
         }
         return "";
     };
-    const validateConfirmPassword = (v: string) => {
+    const validateConfirmPassword = (v: string|undefined) => {
         if(v!==password) {
             return ttlPasswordMismatchError;
         }
         return "";
     };
 
-    const handleChangeName = (value: string) => {
+    const handleChangeName = (value: string|undefined) => {
         const err = validateName(value);
         setName(value);
         setNameError(err);
@@ -86,7 +87,7 @@ export const SignUp = () => {
         setError("");
     };
 
-    const handleChangeUsername = (value: string) => {
+    const handleChangeUsername = (value: string|undefined) => {
         const err = validateUsername(value);
         setUsername(value);
         setUsernameError(err);
@@ -94,7 +95,7 @@ export const SignUp = () => {
         setError("");
     };
 
-    const handleChangePassword = (value: string) => {
+    const handleChangePassword = (value: string|undefined) => {
         const err = validatePassword(value);
         setPassword(value);
         setPasswordError(err);
@@ -102,7 +103,7 @@ export const SignUp = () => {
         setError("");
     };
 
-    const handleChangeConfirmPassword = (value: string) => {
+    const handleChangeConfirmPassword = (value: string|undefined) => {
         const err = validateConfirmPassword(value);
         setConfirmPassword(value);
         setConfirmPasswordError(err);
@@ -115,9 +116,9 @@ export const SignUp = () => {
         let uErr = validateUsername(username);
         let pErr = validatePassword(password);
         let cErr = validateConfirmPassword(confirmPassword);
-        if(!uErr && !pErr &&!nErr && !cErr) {
+        if(!uErr && !pErr &&!nErr && !cErr && username && password && confirmPassword) {
             try {
-                await AuthService.instance().signUp(name, username, password, confirmPassword);
+                await AuthService.instance().signUp(name||"", username, password, confirmPassword);
                 history.push(IMenuUrls.HOME);
                 return;
             } catch(err) {
@@ -150,57 +151,58 @@ export const SignUp = () => {
     const confirmPasswordErrorLocalized = (confirmPasswordError ? t(confirmPasswordError) : "");
     const errorLocalized = (error ? t(error) : "");
 
-    const fields: IFormField[] = [
-        {
-            name: "name",
-            label: ttlName,
-            value: name,
-            onChange: handleChangeName,
-            error: nameErrorLocalized,
-            type: "text",
-            changed: nameChanged
-        },
-        {
-            name: "username",
-            label: ttlUsername,
-            value: username,
-            onChange: handleChangeUsername,
-            error: usernameErrorLocalized,
-            type: "text",
-            changed: usernameChanged
-        },
-        {
-            name: "password",
-            label: ttlPassword,
-            value: password,
-            onChange: handleChangePassword,
-            error: passwordErrorLocalized,
-            type: "password",
-            changed: passwordChanged
-        },
-        {
-            name: "confirmPassword",
-            label: ttlConfirmPassword,
-            value: confirmPassword,
-            onChange: handleChangeConfirmPassword,
-            error: confirmPasswordErrorLocalized,
-            type: "password",
-            changed: confirmPasswordChanged
-        },
-    ];
-
-
 
     return (
         <StyledLayout title={ttlTitle}>
             <Form
                 title={ttlFormTitle}
-                fields={fields}
                 submitLabel={ttlSubmit}
                 onSubmit={handleSubmit}
                 error={errorLocalized}
                 submitDisabled={submitDisabled}
-            />
+            >
+                <InputField
+                    autoFocus={true}
+                    name={"name"}
+                    label={ttlName}
+                    onChange={handleChangeName}
+                    value={name}
+                    changed={nameChanged}
+                    error={nameErrorLocalized}
+                    type={"text"}
+                />
+
+                <InputField
+                    name={"username"}
+                    label={ttlUsername}
+                    onChange={handleChangeUsername}
+                    value={username}
+                    changed={usernameChanged}
+                    error={usernameErrorLocalized}
+                    type={"text"}
+                />
+
+                <InputField
+                    name={"password"}
+                    label={ttlPassword}
+                    onChange={handleChangePassword}
+                    value={password}
+                    changed={passwordChanged}
+                    error={passwordErrorLocalized}
+                    type={"password"}
+                />
+
+                <InputField
+                    name={"confirmPassword"}
+                    label={ttlConfirmPassword}
+                    onChange={handleChangeConfirmPassword}
+                    value={confirmPassword}
+                    changed={confirmPasswordChanged}
+                    error={confirmPasswordErrorLocalized}
+                    type={"password"}
+                />
+
+            </Form>
             <div>
                 {ttlHaveAcct}&nbsp;<Link onClick={handleSignin}>{ttlDosignin}</Link>
             </div>

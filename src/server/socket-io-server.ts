@@ -2,6 +2,8 @@ import * as socketio from "socket.io";
 import { ISession } from "../shared/types/session";
 import http from "http";
 import { IEvent, IEventPayload, ITransportEvent } from "../shared/types/event";
+import { AuthController } from "./controllers/auth";
+import { ID_TYPE } from "../shared/types/id-type";
 
 const getSessionKey = (session: ISession) => {
     return session.toLocaleLowerCase();
@@ -73,11 +75,27 @@ export class SocketIOServer {
         this.io.emit("message", evt);
     }
 
-    public sendEventToSession(eventName: IEvent, session: ISession, payload: IEventPayload) {
+    public sendEventToUserId(eventName: IEvent, userId: ID_TYPE, payload?: IEventPayload) {
         const evt: ITransportEvent = {eventName, payload};
-        const socket = this.getSessionSocket(session);
-        if(socket) {
-            socket.send(evt);
+        try {
+            const session = AuthController.instance().getUserIdSession(userId)
+            if(!session) {
+                console.warn("not found session for userId, skipping", userId);
+                return;
+            }
+            const socket = this.getSessionSocket(session);
+            if(socket) {
+                console.log(`sendEventToSession session=${session} eventName=${eventName} payload=`, payload)
+                socket.send(evt);
+            }
+        } catch(err) {
+            console.error(err);
+        }        
+    }
+
+    public sendEventToUserIds(eventName: IEvent, userIds: ID_TYPE[], payload?: IEventPayload) {
+        for(let userId of userIds) {
+            this.sendEventToUserId(eventName, userId, payload);
         }
     }
 }

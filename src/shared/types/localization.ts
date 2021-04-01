@@ -7,6 +7,7 @@ export enum ILocalizationCategory {
     SIGNIN="signin",
     SIGNUP="signup",
     MAINMENU="mainmenu",
+    HOME="home",
 }
 
 export enum ILocalizationResource {
@@ -42,4 +43,6 @@ export enum ILocalizationResource {
     CONTACTLIST="contactlist",
     ERROR_CONTACTNOTSELECTED="error_contactnotselected",
     TYPEMESSAGE="typemessage",
+    AVATAR="avatar",
+    SELECTCONTACT="select-contact",
 }

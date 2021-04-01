@@ -1,25 +1,42 @@
 import {useDispatch} from "react-redux";
-import {setProfile} from "../../state/profile";
 import {useEffect} from "react";
-import {NotificationService} from "../../service/notification";
-import {IEvent} from "../../../shared/types/event";
-import {IProfile} from "../../../shared/types/profile";
 
 export interface IProfileProviderProps {
     children: any;
 }
 export const ProfileProvider = (props: IProfileProviderProps) => {
     const dispatch = useDispatch();
-    const handleProfileChange = (profile: IProfile) => {
-        dispatch(setProfile(profile));
+    const handleProfileChange = async () => {
+        /*
+        try {
+            const p = await AuthService.instance().profileGet();
+            dispatch(setProfile(p));
+        } catch(err) {
+            console.error(err);
+        }
+         */
     };
 
     useEffect( () => {
-        const listenerId = NotificationService.instance().subscribe(IEvent.PROFILE, undefined, handleProfileChange);
+        let mounted;
+        /*
+        const fetchData = async () => {
+            try {
+                await AuthService.instance().profileGet();
+            } catch(err) {
+                console.error(err);
+            }
+        };        
+        const listenerId = NotificationService.instance().subscribe(IEvent.PROFILECHANGE, undefined, handleProfileChange);
         console.log("ProfileProvider listenerId = ", listenerId)
-        return () => {
-            NotificationService.instance().unsubscribe(IEvent.PROFILE, undefined, listenerId);
+        if(mounted) {
+            fetchData();
         }
+        return () => {
+            mounted=false;
+            NotificationService.instance().unsubscribe(IEvent.PROFILECHANGE, undefined, listenerId);
+        }
+         */
     }, []);
 
     return (

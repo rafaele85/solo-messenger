@@ -19,12 +19,11 @@ const useStyles = makeStyles((theme: Theme) => {
             color: theme.palette.text.secondary
         }
     };
-});
+}, {name: "contact-menu-item"});
 
 
 export const ContactMenuItem = (props: IContactMenuItemProps) => {
     const classes = useStyles();
-    const st: React.CSSProperties = {color: "crimson"}
     let cl;
     if(props.contact.unread) {
         cl = classes.unread;

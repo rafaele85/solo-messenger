@@ -11,18 +11,82 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fa994404-dce5-45c6-9d34-f5d19e7f1745" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/form/form.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/form2.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/arch.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/attick/create-table-session.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/create-function-contact-get.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/create-function-friend-request.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/create-function-jsetint.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/create-function-profile-get.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/create-function-profileupdate.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/dbexecutor/dist/dbexecutor.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/postgresql/drop.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/components/contact-list.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/client/components/form/image-upload-field.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/field.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/menu.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/layout/styled-layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/layout/styled-layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/add-contact.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/add-contact.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/pages/signin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/pages/signin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/providers/contacts-provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/providers/contacts-provider.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-friend-add.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-friend-add.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-matching-contact-list.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-matching-contact-list.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-message-send.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-message-send.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-messages-list.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-messages-list.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-my-contacts-list.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-my-contacts-list.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-userlogin.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-userlogin.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-userlogout.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-userlogout.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-function-usersignup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-function-usersignup.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-table-log.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-table-log.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-table-message.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-table-message.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-table-session.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgresql/create-table-user.sql" beforeDir="false" afterPath="$PROJECT_DIR$/postgresql/create-table-user.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/form2.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/form2.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/input-field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/input-field.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/list-field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/list-field.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/global-styles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/global-styles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/contact-menu-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/contact-menu-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/drawer-toggle-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/drawer-toggle-button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/styled-layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/styled-layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/add-contact.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/add-contact.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat-input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat-input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat-message.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat-message.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat-messages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat-messages.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/not-found.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/not-found.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/signin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/signin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/signup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/signup.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/providers/auth-provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/providers/auth-provider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/providers/contacts-provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/providers/contacts-provider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/providers/messages-provider.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/providers/profile-provider.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/providers/profile-provider.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/common.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/contact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/contact.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/localization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/localization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/notification.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/notification.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/socket-io-service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/service/socket-io-service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/service/uuid.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/state/messages.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/state/root.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/state/root.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/controllers/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/controllers/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/controllers/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/controllers/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/controllers/contact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/controllers/contact.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/controllers/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/controllers/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/socket-io-server.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/socket-io-server.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/util/query-parse.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/util/query-parse.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/api.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/api.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/auth.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/auth.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/contact.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/contact.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/event.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/event.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/localization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/localization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/shared/types/profile.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/shared/types/profile.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,14 +96,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1q4mUUsxmD627rC8cxMQwWJtEz8" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
@@ -79,6 +153,10 @@
       <workItem from="1616347827776" duration="2011000" />
       <workItem from="1616349854744" duration="16322000" />
       <workItem from="1616374203675" duration="28264000" />
+      <workItem from="1616950766961" duration="222000" />
+      <workItem from="1616951050745" duration="185000" />
+      <workItem from="1616951447323" duration="9491000" />
+      <workItem from="1617207266671" duration="33832000" />
     </task>
     <task id="LOCAL-00001" summary="initial layout and menu">
       <created>1616386174584</created>
@@ -108,39 +186,5 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial layout and menu" />
     <option name="LAST_COMMIT_MESSAGE" value="initial layout and menu" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="452" y="95" key="#Deployment" timestamp="1616349665352">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="452" y="95" key="#Deployment/0.0.1920.1040@0.0.1920.1040" timestamp="1616349665352" />
-    <state x="432" y="78" key="#SSH_Configurations" timestamp="1616347897816">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="432" y="78" key="#SSH_Configurations/0.0.1920.1040@0.0.1920.1040" timestamp="1616347897816" />
-    <state x="624" y="205" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1616374722102">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="624" y="205" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1616374722102" />
-    <state x="92" y="92" width="1736" height="856" key="DirDiffDialog" timestamp="1616349840366">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="DirDiffDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1616349840366" />
-    <state x="789" y="396" key="WebDeployment.AddServerDialog.v.1" timestamp="1616347873075">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="789" y="396" key="WebDeployment.AddServerDialog.v.1/0.0.1920.1040@0.0.1920.1040" timestamp="1616347873075" />
-    <state x="532" y="237" key="run.anything.popup" timestamp="1616384319522">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="532" y="237" key="run.anything.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1616384319522" />
-    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup" timestamp="1616433598171">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="539" y="5" width="840" height="1034" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1616433598171" />
-    <state x="711" y="194" key="webDeployment.PermissionsDialog.Tabs" timestamp="1616349130533">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="711" y="194" key="webDeployment.PermissionsDialog.Tabs/0.0.1920.1040@0.0.1920.1040" timestamp="1616349130533" />
   </component>
 </project>

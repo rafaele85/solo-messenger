@@ -1,14 +1,16 @@
 import {StyledLayout} from "../layout/styled-layout";
-import {Form, IFormField} from "../form/form2";
+import {Form} from "../form/form2";
 import {useEffect, useState} from "react";
 import { IMenuUrls } from "../../client-types/menu";
-import { localization } from './../../service/localization';
+import { localization } from '../../service/localization';
 import { ILocalizationCategory, ILocalizationResource } from "../../../shared/types/localization";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../state/root";
 import { IContactShort1 } from "../../../shared/types/contact";
 import { ID_TYPE } from "../../../shared/types/id-type";
-import { ContactService } from './../../service/contact';
+import { ContactService } from '../../service/contact';
+import {InputField} from "../form/input-field";
+import {ListField} from "../form/list-field";
 
 export const AddContact = () => {
     const lang = useSelector(selectLanguage);
@@ -21,7 +23,7 @@ export const AddContact = () => {
     const ttlCancel = t(ILocalizationResource.CANCELBUTTON)||"Назад";
     const ttlSelectedContact = t(ILocalizationResource.CONTACTLIST)||"Результаты поиска";
 
-    const [query, setQuery] = useState<string>("");
+    const [query, setQuery] = useState<string|undefined>("");
     const [queryError, setQueryError] = useState<string>("");
     const [queryChanged, setQueryChanged] = useState<boolean>(false);
 
@@ -62,22 +64,21 @@ export const AddContact = () => {
     }, [query]);
 
 
-    const validateQuery = (v: string) => {
+    const validateQuery = (v: string|undefined) => {
         if(!v || v.length<3) {
             return ILocalizationResource.ERROR_NAMELEN;
         }
         return "";
     };
 
-    
-    const validateSelectedContactId = (v: string) => {
+    const validateSelectedContactId = (v: string|undefined) => {
         if(!v) {
             return ILocalizationResource.ERROR_CONTACTNOTSELECTED;
         }
         return "";
     };
 
-    const handleChangeQuery = (value: string) => {
+    const handleChangeQuery = (value: string|undefined) => {
         const err = validateQuery(value);
         setQuery(value);
         setQueryError(err);
@@ -85,7 +86,7 @@ export const AddContact = () => {
         setError("");
     };
 
-    const handleChangeSelectedContactId = (value: string) => {
+    const handleChangeSelectedContactId = (value: string|undefined) => {
         const err = validateSelectedContactId(value);
         setSelectedContactId(value);
         setSelectedContactIdError(err);
@@ -98,7 +99,7 @@ export const AddContact = () => {
         let sErr = validateSelectedContactId(selectedContactId||"");
         if(!qErr && !selectedContactIdError && selectedContactId) {
             try {
-                await ContactService.instance().friendAdd(selectedContactId);
+                await ContactService.instance().contactRequest(selectedContactId, "Please add me");
                 setQuery("");
                 return;
             } catch(err) {
@@ -118,36 +119,38 @@ export const AddContact = () => {
 
     const queryErrorLocalized = t(queryError);
 
-    const queryField: IFormField = {
-        name: "query",
-        label: ttlSearch,
-        value: query,
-        onChange: handleChangeQuery,
-        changed: queryChanged,
-    };
-
-    const selectedContactIdField: IFormField = {
-        name: "selectedContactId",
-        label: ttlSelectedContact,
-        value: selectedContactId,
-        type: "list",
-        onChange: handleChangeSelectedContactId,
-        changed: selectedContactIdChanged,
-        listValues: contactList,
-        listLabelExtractor: extractContactLabel,
-        listValueExtractor: extractContactId,
-    }
 
     return (
         <StyledLayout title={ttlTitle}>
             <Form title={ttlFormTitle}
-                  fields={[queryField, selectedContactIdField]}
                   cancelLabel={ttlCancel}
                   cancelUrl={IMenuUrls.HOME}
                   submitLabel={ttlAdd}
                   onSubmit={handleSubmit}
                   submitDisabled={submitDisabled}
-            />
+            >
+                <InputField
+                    name="query"
+                    label={ttlSearch}
+                    value={query}
+                    onChange={handleChangeQuery}
+                    changed={queryChanged}
+                    type={"text"}
+                    autoFocus={true}
+                    //error={queryErrorLocalized}
+                />
+                <ListField
+                    name={"selectedContactId"}
+                    label={ttlSelectedContact}
+                    value={selectedContactId}
+                    onChange={handleChangeSelectedContactId}
+                    changed={selectedContactIdChanged}
+                    listValues={contactList}
+                    listLabelExtractor={extractContactLabel}
+                    listValueExtractor={extractContactId}
+                />
+            </Form>
         </StyledLayout>
     );
 }
+

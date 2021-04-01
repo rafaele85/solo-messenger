@@ -1,6 +1,3 @@
-
-drop table if exists session;
-
 create table session (
    id SERIAL PRIMARY KEY,
    sessionkey varchar(100),

@@ -3,15 +3,24 @@ import { ILanguage } from "./language"
 import { ISession } from "./session"
 
 export enum APIResources {
-    LOGIN="/auth/signin",
-    LOGOUT="/auth/logout",
-    SIGNUP="/auth/signup",
-    UPDATEPROFILE="/auth/update-profile",
-    MYCONTACTSLIST="/contact/my-contacts-list",
-    MATCHINGCONTACTLIST="/contact/matching-contacts-list",
-    FRIENDADD="/contact/friend-add",
+    USERLOGIN="/auth/user-login",
+    USERLOGOUT="/auth/user-logout",
+    USERSIGNUP="/auth/user-signup",
+    PROFILEGET="/profile/get",
+    PROFILEUPDATE="/profile/update",
+
+    CONTACTGET="/contact/get",
+    CONTACTLIST="/contact/list",
+    MATCHINGCONTACTLIST="/contact/matching-list",
+    CONTACTSELECT="/contact/select",
+    CONTACTREQUEST="/contact/request",
+    CONTACTACCEPT="/contact/accept",
+
+    MESSAGEGET="/message/get",
     MESSAGESEND="/message/send",
     MESSAGELIST="/message/list",
+    MESSAGECHANGE="/message/change",
+    MESSAGEDELETE="/message/delete",
 }
 
 export type IRequestParams<TInputParams> = TInputParams & {session?: ISession, language?: ILanguage, messageId?: ID_TYPE};

@@ -9,6 +9,7 @@ export interface IAuthProviderProps {
     children: any;
 }
 export const AuthProvider = (props: IAuthProviderProps) => {
+    /*
     const dispatch = useDispatch();
     const handleAuthChange = (auth: IAuth) => {
         dispatch(setAuth(auth));
@@ -21,7 +22,7 @@ export const AuthProvider = (props: IAuthProviderProps) => {
             NotificationService.instance().unsubscribe(IEvent.AUTH, undefined, listenerId);
         }
     }, []);
-
+*/
     return (
         <>
             {props.children}

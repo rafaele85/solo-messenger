@@ -8,7 +8,6 @@ import { useState, ChangeEvent, useRef, KeyboardEvent } from 'react';
 import { ID_TYPE } from '../../../../shared/types/id-type';
 import { MessageService } from '../../../service/message';
 
-
 const useStyles = makeStyles((theme: Theme) => {
     return {
         bottom: {
@@ -39,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) => {
 
 export interface IChatInputProps {
     selectedContactId: ID_TYPE;
-};
+}
 
 export const ChatInput = (props: IChatInputProps) => {
     const classes=useStyles();
@@ -55,7 +54,7 @@ export const ChatInput = (props: IChatInputProps) => {
 
     const ref = useRef<HTMLTextAreaElement>(null);
 
-    const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {        
+    const handleKeyDown = (_e: KeyboardEvent<HTMLTextAreaElement>) => {
         setTimeout(() => {
             const el = ref.current;            
             if(el) {
@@ -73,6 +72,7 @@ export const ChatInput = (props: IChatInputProps) => {
         try {
             await MessageService.instance().messageSend(text, props.selectedContactId);
             setText("");
+
         } catch(err) {
             console.error(err);
         }

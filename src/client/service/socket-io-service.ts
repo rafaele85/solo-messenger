@@ -13,7 +13,7 @@ export class SocketIOService {
 
    private socket: SocketIOClient.Socket|undefined=undefined;
 
-   private SocketIOServer() {
+   private constructor() {      
    }
 
    public initialize(session: ISession) {

@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) => {
 export interface IFormField {
     name: string;
     label: string;
-    isValid?: (val: string) => string;
+    isValid?: (val: string|undefined) => string;
     minLen?: number;
     minLenError?: string;
     value?: string;
@@ -52,16 +52,16 @@ export interface IFormProps {
     submitLabel?: string;
     onSubmit: () => void;
     errors?: IFormValues;
-    onChange: (fieldName: string, value: string, validationError?: string) => void;
+    onChange: (fieldName: string, value: string|undefined, validationError?: string) => void;
 }
 
 export const Form = (props: IFormProps) => {
 
-    const validateField = (f: IFormField, v: string) => {
+    const validateField = (f: IFormField, v: string|undefined) => {
         if(f.isValid) {
             return f.isValid(v);
         }
-        if(f.minLen && v.length<f.minLen) {
+        if(f.minLen && v && v.length<f.minLen) {
             return f.minLenError||`${f.label} should contain at least ${f.minLen} characters`;
         }
         return "";
@@ -83,7 +83,7 @@ export const Form = (props: IFormProps) => {
         }
     };
 
-    const updateField = (f: IFormField, val: string) => {
+    const updateField = (f: IFormField, val: string|undefined) => {
         const err = validateField(f, val);
         props.onChange(f.name, val, err);
     };
@@ -117,7 +117,7 @@ export const Form = (props: IFormProps) => {
                 name={f.name}
                 label={f.label}
                 type={type}
-                onChange={(v: string) => updateField(f, v)}
+                onChange={(v: string|undefined) => updateField(f, v)}
                 value={f.value}
                 error={(props.errors||{})[f.name]||""}
                 autoFocus={i===0}
