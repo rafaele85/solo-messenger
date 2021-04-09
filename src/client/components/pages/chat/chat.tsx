@@ -27,6 +27,17 @@ const useStyles = makeStyles((theme: Theme) => {
         },
     }
 }, {name: "chat"});
+
+/**
+ * Main chat page.
+ * Shows selected contact's name at the top and list of messages in the main area.
+ * Contains an entry field at the bottom of the screen to enter new messages.
+ * It is shown when the user selects one of the contacts in their contact list to chat with.
+ * Upon mounting and any change to props.id (contact id) will retrieve from server the list of chat messages with selected
+ * contact and show it
+ *
+ * @constructor
+ */
 export const Chat = () => {
     const classes = useStyles();
     const lang = useSelector(selectLanguage);

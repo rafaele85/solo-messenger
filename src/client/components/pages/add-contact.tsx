@@ -12,6 +12,13 @@ import { ContactService } from '../../service/contact';
 import {InputField} from "../form/input-field";
 import {ListField} from "../form/list-field";
 
+/**
+ * Form for searching and adding contacts to the contact list.
+ * Features search field on the top and matching list below it and the Add button at the bottom of the list.
+ * The list is refreshed automatically from the server as the user types in the contact name in the search field.
+ * The user can select a contact from the matching list and click Add to add them to the contact list.
+ * @constructor
+ */
 export const AddContact = () => {
     const lang = useSelector(selectLanguage);
     const t = localization(ILocalizationCategory.ADDCONTACT, lang);

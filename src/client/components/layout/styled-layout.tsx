@@ -83,12 +83,31 @@ const useStyles = makeStyles( (theme: Theme) => {
     };
 }, {name: "layout"});
 
+/**
+ * Props for StyledLayout component
+ */
 export interface IStyledLayoutProps {
+    /**
+     * Title to show on the top header bar
+     */
     title: string;
+
+    /**
+     * User name in the current user's profile to show on the top header bar
+     */
     profileName?: string;
+
+    /**
+     * Children to show in the main area of the layout
+     */
     children: any;
 }
 
+/**
+ * Main screen layout. Features top header bar, left menu (optionally with toggle button), and main area
+ * @param props component props see IStyledLayoutProps
+ * @constructor
+ */
 export const StyledLayout = (props: IStyledLayoutProps) => {
 
     const classes = useStyles();

@@ -28,8 +28,14 @@ const useStyles = makeStyles( (theme: Theme) => {
     }
 }, {name: "menu"});
 
+/**
+ * Props for a menu
+ */
 export interface IMenuProps {
-    additionalClickEffect: () => void;
+    /**
+     * Apart from specifying urls will call this callback (if specified)
+     */
+    additionalClickEffect?: () => void;
 }
 
 export const Menu = (props: IMenuProps) => {

@@ -40,17 +40,49 @@ export interface IFormField<T> {
 
 export type IFormFieldValidateFunc = (value: string) => string;
 
+/**
+ * Form props
+ */
 export interface IFormProps {
+    /**
+     * For title to display above the form. If not specified, title will not be displayed
+     */
     title?: string;
+    /**
+     * Label to show on Cancel button. If not specified, the Cancel button will not be shown
+     */
     cancelLabel?: string;
+    /**
+     * React router url to go when user presses Cancel button
+     */
     cancelUrl?: string;
+    /**
+     * Label to show on the Submit button. If not specified , default is "Submit"
+     */
     submitLabel?: string;
+    /**
+     * callback to call when user presses Submit button
+     */
     onSubmit: () => void;
+    /**
+     * Submit button is disabled
+     */
     submitDisabled?: boolean;
+    /**
+     * Error message that is not specific to a field (e.g. server error)
+     */
     error?: string;
+    /**
+     * Form children, including form fields
+     */
     children?: any;
 }
 
+/**
+ * Basic form wrapper, provides for box title, and buttons
+ * @param props form props (title, etc) see IFormProps
+ * @constructor
+ */
 export const Form = (props: IFormProps) => {
     const classes = useStyles();
 

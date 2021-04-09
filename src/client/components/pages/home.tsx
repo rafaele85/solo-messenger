@@ -4,6 +4,10 @@ import {selectLanguage} from "../../state/root";
 import {ILocalizationCategory, ILocalizationResource} from "../../../shared/types/localization";
 import {localization} from "../../service/localization";
 
+/**
+ * Landing page to show after successful login until user selects a menu option
+ * @constructor
+ */
 export const Home = () => {
     const lang = useSelector(selectLanguage);
     const t = localization(ILocalizationCategory.HOME, lang);

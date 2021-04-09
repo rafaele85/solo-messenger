@@ -11,7 +11,7 @@ import {ID_TYPE} from "../../shared/types/id-type";
 import {ContactService} from "../service/contact";
 
 export interface IContactListProps {
-    additionalClickEffect: () => void;
+    additionalClickEffect?: () => void;
 }
 
 export const ContactList = (props: IContactListProps) => {

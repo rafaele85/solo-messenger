@@ -17,6 +17,11 @@ export interface IInputFieldProps extends IFormField<string> {
 
 }
 
+/**
+ * Basic text input field, can be regular text field, password, email or tel
+ * @param props field props (see IFormField)
+ * @constructor
+ */
 export const InputField = (props: IInputFieldProps) => {
     const classes = useStyles();
 

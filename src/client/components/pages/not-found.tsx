@@ -6,6 +6,10 @@ import { ILocalizationCategory, ILocalizationResource } from "../../../shared/ty
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../state/root";
 
+/**
+ * Page to show when an unknown url is specified (normally should not happen)
+ * @constructor
+ */
 export const NotFound = () => {    
     const lang = useSelector(selectLanguage);
     const t = localization(ILocalizationCategory.PAGENOTFOUND, lang);

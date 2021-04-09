@@ -35,11 +35,28 @@ const useStyles = makeStyles((theme: Theme) => {
     }
 });
 
+/**
+ * Props for ChatInput component
+ */
 export interface IChatInputProps {
+    /**
+     * Selected contact to send message to
+     */
     selectedContactId: ID_TYPE;
+
+    /**
+     * callback that is called when the user presses the Send button
+     * @param txt message to send
+     */
     messageSend: (txt: string) => void;
 }
 
+/**
+ * The area where the user enters their chat message to send
+ * Contains an input field and  Send button
+ * @param props component props (see IChatInputProps)
+ * @constructor
+ */
 export const ChatInput = (props: IChatInputProps) => {
     const classes=useStyles();
     const lang = useSelector(selectLanguage);

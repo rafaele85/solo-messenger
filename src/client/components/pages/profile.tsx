@@ -12,6 +12,16 @@ import {IProfile} from "../../../shared/types/profile";
 import {InputField} from "../form/input-field";
 import {ImageUploadField} from "../form/image-upload-field";
 
+
+/**
+ * User's profile edit form.
+ * Brings up the user profile data from server upon mount.
+ * User can change their password, name , and upload avatar image
+ * The form performs validation of name, password, and the confirm password fields upon change and upon submit.
+ * When submitted, saves the data to the server. If an error is returned from the server, shows it in the appropriate
+ * field error or non-field specific error component
+ * @constructor
+ */
 export const Profile = () => {
     const lang = useSelector(selectLanguage);
     const t = localization(ILocalizationCategory.PROFILE, lang);

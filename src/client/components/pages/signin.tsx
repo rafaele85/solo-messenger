@@ -11,6 +11,15 @@ import { selectLanguage } from "../../state/root";
 import { useSelector } from "react-redux";
 import {InputField} from "../form/input-field";
 
+/**
+ * User sign in form.
+ * Contains username, password fields and Signin button
+ * Also it allows for selecting Sign up link to switch to Sign up form if the user does not have account yet
+ * The form performs validation of username and password upon change and upon submit
+ * Upon submit triggers signin endpoint on the server through AuthService and upon errors from the service
+ * shows the errors under appropriate field
+ * @constructor
+ */
 export const SignIn = () => {    
     const lang = useSelector(selectLanguage);
     const t = localization(ILocalizationCategory.SIGNIN, lang);

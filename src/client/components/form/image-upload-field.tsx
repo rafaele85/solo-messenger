@@ -37,11 +37,20 @@ const useStyles = makeStyles( (_theme: Theme) => {
     }
 }, {name: "image-upload-field"});
 
+/**
+ * Includes all basic field props + url.
+ * If url is specified then show a small thumbnail preview of the image
+ */
+
 export interface IImageUploadFieldProps extends IFormField<File>{
     url?: string;
 }
 
-
+/**
+ * A form field that allows for uploading an image
+ * @param props component props see IImageUploadFieldProps
+ * @constructor
+ */
 export const ImageUploadField = (props: IImageUploadFieldProps) => {
     const classes = useStyles();
 

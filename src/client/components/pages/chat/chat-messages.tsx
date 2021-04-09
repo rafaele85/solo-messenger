@@ -7,10 +7,6 @@ import { MessageService } from '../../../service/message';
 import { NotificationService } from "../../../service/notification";
 import { IEvent } from "../../../../shared/types/event";
 
-export interface IChatMessagesProps {
-    selectedContactId: ID_TYPE;
-}
-
 const useStyles = makeStyles((_theme: Theme) => {
     return {
         main: {
@@ -25,6 +21,32 @@ const useStyles = makeStyles((_theme: Theme) => {
         
     }
 }, {name: "chat-message-list"});
+
+
+/**
+ * props for ChatMessages component
+ */
+export interface IChatMessagesProps {
+    /**
+     * ID of the contact to show messages with
+     */
+    selectedContactId: ID_TYPE;
+}
+
+
+/**
+ * This component loads and displays list of chat messages with selected contact
+ * @param props component props (see IChatMessagesProps)
+ * It uses MessageService to retrieve list of messages from server
+ * The list is loaded :
+ * - when the component is first mounted
+ * - when selectedContactId is changed (e.g user selects another contact to chat with from the menu)
+ * - every time when there is the MESSAGELISTCHANGE event sent through NotificationService (e.g message list is updated on the server)
+ *
+ * Apart from reloading the entire list this component can reload and refresh a specific message when it receives
+ * the MESSAGECHANGE event through NotificationService (e.g. the contact edited their message).
+ * @constructor
+ */
 
 export const ChatMessages = (props: IChatMessagesProps) => {
     const classes = useStyles();

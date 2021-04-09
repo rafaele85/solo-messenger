@@ -14,12 +14,36 @@ const useStyles = makeStyles( (theme: Theme) => {
     }
 }, {name: "list-field"});
 
+/**
+ * Props for the ListField component. Apart from regular IFormField props
+ * include listValues, listLabelExtractor callback and listValueExtractor
+ */
 export interface IListFieldProps extends IFormField<string> {
+    /**
+     * Array of choices for the dropdown list
+     */
     listValues?: any[];
+
+    /**
+     * Extracts label from the list item. The label is shown to the user in the list
+     * @param obj one of the items from listValues
+     * @return label to show in the list
+     */
     listLabelExtractor?: (obj: any) => string;
+
+    /**
+     * Extracts value from the list item. The label is used as the return value when the user selects an option
+     * @param obj one of the items from listValues
+     * @return value to return when the user makes a selection
+     */
     listValueExtractor?: (obj: any) => string;
 }
- 
+
+/**
+ * Drop down list field.
+ * @param props component props , see IListFieldProps
+ * @constructor
+ */
 export const ListField = (props: IListFieldProps) => {
     const classes = useStyles();
 

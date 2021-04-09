@@ -12,10 +12,24 @@ const useDrawerToggleButtonStyles = makeStyles((theme: Theme) => {
     }
 }, {name: "drawer-toggle-button"});
 
+
+/**
+ * Props for DrawerTogglerButotn
+ */
 export interface IDrawerToggleButtonProps {
+    /**
+     * Callback to call when user clicks on the drawer toggle button
+     */
     onClick: () => void;
 }
 
+
+/**
+ * Button to toggle drawer on and off (show / hide drawer)
+ * Only shown if screen resolution is less than "sm" breakpoint
+ * @param props props for the component (see IDrawerToggleButtonProps)
+ * @constructor
+ */
 export const DrawerToggleButton = (props: IDrawerToggleButtonProps) => {
     const classes = useDrawerToggleButtonStyles();
     return (

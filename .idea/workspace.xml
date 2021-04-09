@@ -1,20 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="BranchesTreeState">
-    <expand>
-      <path>
-        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
-        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
-      </path>
-    </expand>
-    <select />
-  </component>
   <component name="ChangeListManager">
-    <list default="true" id="fa994404-dce5-45c6-9d34-f5d19e7f1745" name="Default Changelist" comment="">
+    <list default="true" id="5728c3b9-22b7-4a57-b7b7-fae980e61587" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/client-types/menu.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/client-types/menu.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/contact-list.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/contact-list.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/form.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/form2.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/form2.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/image-upload-field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/image-upload-field.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/input-field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/input-field.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/list-field.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/list-field.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/form/validation-error.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/form/validation-error.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/contact-menu-item.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/contact-menu-item.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/drawer-toggle-button.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/drawer-toggle-button.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/menu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/menu.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/layout/styled-layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/layout/styled-layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/add-contact.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/add-contact.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat-input.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat-input.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat-message.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat-message.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat-messages.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat-messages.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/client/components/pages/chat/chat.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/chat/chat.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/not-found.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/not-found.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/client/components/pages/signin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/client/components/pages/signin.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,84 +34,32 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="ProjectId" id="1q4mUUsxmD627rC8cxMQwWJtEz8" />
+  <component name="ProjectId" id="1qvHhGMFAVyytOxvW4b74tu8olZ" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
-    <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
-    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/form" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="ts.external.directory.path" value="C:\work\projects\chat\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\work\projects\chat\src\components\providers" />
-      <recent name="C:\work\projects\chat\src\components\layout" />
-      <recent name="C:\work\projects\chat\src" />
-      <recent name="C:\work\projects\chat\src\components\services" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\work\projects\chat\src\components\form" />
-      <recent name="C:\work\projects\chat\src\components\providers" />
-      <recent name="C:\work\projects\chat\src\state" />
-      <recent name="C:\work\projects\chat\src\service" />
-    </key>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="fa994404-dce5-45c6-9d34-f5d19e7f1745" name="Default Changelist" comment="" />
-      <created>1616347252430</created>
+      <changelist id="5728c3b9-22b7-4a57-b7b7-fae980e61587" name="Default Changelist" comment="" />
+      <created>1617953260603</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1616347252430</updated>
-      <workItem from="1616347253478" duration="265000" />
-      <workItem from="1616347558764" duration="237000" />
-      <workItem from="1616347827776" duration="2011000" />
-      <workItem from="1616349854744" duration="16322000" />
-      <workItem from="1616374203675" duration="28264000" />
-      <workItem from="1616950766961" duration="222000" />
-      <workItem from="1616951050745" duration="185000" />
-      <workItem from="1616951447323" duration="9491000" />
-      <workItem from="1617207266671" duration="36395000" />
-      <workItem from="1617276690211" duration="133000" />
+      <updated>1617953260603</updated>
+      <workItem from="1617953261747" duration="2548000" />
     </task>
-    <task id="LOCAL-00001" summary="initial layout and menu">
-      <created>1616386174584</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1616386174584</updated>
-    </task>
-    <task id="LOCAL-00002" summary="profile screen, upload avatar">
-      <created>1617257999300</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1617257999300</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,11 +75,5 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="initial layout and menu" />
-    <MESSAGE value="profile screen, upload avatar" />
-    <option name="LAST_COMMIT_MESSAGE" value="profile screen, upload avatar" />
   </component>
 </project>

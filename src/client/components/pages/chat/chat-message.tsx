@@ -3,6 +3,11 @@ import { IMessage } from "../../../../shared/types/message";
 import Avatar from "@material-ui/core/Avatar";
 import { ID_TYPE } from "../../../../shared/types/id-type";
 
+/**
+ * Convert message timestamp into localized date/time string
+ * @param d message timestamp
+ * @return localized date/time string
+ */
 const formatMessageDate = (d: number) => {
     const dt = new Date(d);
     return dt?.toLocaleDateString();
@@ -60,11 +65,27 @@ const useStyles = makeStyles((theme: Theme) => {
     }    
 });
 
+/**
+ * Props for ChatMessage component
+ */
 export interface IChatMessageProps {
+    /**
+     * id of the contact who this message is from/to
+     */
     selectedContactId: ID_TYPE;
+
+    /**
+     * message object
+     */
     message: IMessage;
 }
 
+/**
+ * Renders single chat message, including sender's Avatar, sender name, message text and date/time
+ * If message is multi-line, renders each row in a separate <p> tag
+ * @param props component props (see IChatMessageProps)
+ * @constructor
+ */
 export const ChatMessage = (props: IChatMessageProps) => {
     const classes = useStyles();
     const jsxTextRows: JSX.Element[] = [];
