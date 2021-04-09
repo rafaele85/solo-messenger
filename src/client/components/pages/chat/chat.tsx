@@ -13,6 +13,7 @@ import {ID_TYPE} from "../../../../shared/types/id-type";
 import {NotificationService} from "../../../service/notification";
 import {IEvent} from "../../../../shared/types/event";
 import {makeStyles, Theme} from "@material-ui/core";
+import {MessageService} from "../../../service/message";
 
 const useStyles = makeStyles((theme: Theme) => {
     return {
@@ -70,12 +71,23 @@ export const Chat = () => {
         }
     }, [params.id]);
 
+    const handleMessageSend = async (txt: string) => {
+        if(!txt) {
+            return;
+        }
+        try {
+            await MessageService.instance().messageSend(txt, id);
+        } catch(err) {
+            console.error(err);
+        }
+    }
+
     const title = `${ttlChatWith} ${currentContact?.name}`;
     return (
         <StyledLayout title={title}>
             <div className={classes.chat}>
                 <ChatMessages selectedContactId={id}/>
-                <ChatInput selectedContactId={id} />
+                <ChatInput selectedContactId={id} messageSend={handleMessageSend}/>
             </div>
         </StyledLayout>
     )

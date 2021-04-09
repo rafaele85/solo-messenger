@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 import { selectLanguage } from '../../../state/root';
 import { useState, ChangeEvent, useRef, KeyboardEvent } from 'react';
 import { ID_TYPE } from '../../../../shared/types/id-type';
-import { MessageService } from '../../../service/message';
 
 const useStyles = makeStyles((theme: Theme) => {
     return {
@@ -38,6 +37,7 @@ const useStyles = makeStyles((theme: Theme) => {
 
 export interface IChatInputProps {
     selectedContactId: ID_TYPE;
+    messageSend: (txt: string) => void;
 }
 
 export const ChatInput = (props: IChatInputProps) => {
@@ -66,16 +66,8 @@ export const ChatInput = (props: IChatInputProps) => {
     };
     
     const handleSend = async () => {
-        if(!text) {
-            return;
-        }
-        try {
-            await MessageService.instance().messageSend(text, props.selectedContactId);
-            setText("");
-
-        } catch(err) {
-            console.error(err);
-        }
+       props.messageSend(text);
+        setText("");
     };
 
     let nrows = (text ? text.split("\n").length : 1);
@@ -104,8 +96,3 @@ export const ChatInput = (props: IChatInputProps) => {
         </form>
     );
 }
- 
-/*
-            
-
-*/

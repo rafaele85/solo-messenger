@@ -16,6 +16,11 @@ const useStyles = makeStyles((_theme: Theme) => {
         main: {
             width: "100%",
             overflowY: "scroll",
+            "&::-webkit-scrollbar": {
+                display: "none"
+            },
+            "-ms-overflow-style": "none",
+            "scrollbar-width": "none",
         },
         
     }
